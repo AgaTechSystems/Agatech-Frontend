@@ -1,0 +1,103 @@
+.box_height{
+    transition: all .5s ease;
+}
+
+.gdbgcolor{
+    background-image: linear-gradient(rgba(134, 230, 163, .6), rgba(50, 192, 218, .8)), linear-gradient(90deg, rgba(134, 230, 163, .6), rgba(50, 192, 218, .8));
+}
+
+.member__img {
+    width: 9.375rem;
+    min-height: 9.375rem;
+    overflow: hidden;
+}
+
+.member__img img {
+    display: inline-block;
+    margin: 0;
+    height: auto;
+    vertical-align: text-bottom;
+    max-width: 100%;
+    padding: 0;
+    line-height: 0;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
+
+.slimeborder{
+    border: 0.2px solid rgba(255, 255, 255, .05);
+}
+
+.service-card_wrapper {
+    background-image: url("/64f194d24d3c9690e939267e_bg servicecard 1.svg"), linear-gradient(-200deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, 0));
+     background-position: 50%, 0 0; ;
+    background-size: cover, auto; 
+}
+.header-small_banner {
+    letter-spacing: 4px;
+    background-image: linear-gradient(rgba(134, 230, 163, .4), rgba(50, 192, 218, .4)), linear-gradient(90deg, rgba(134, 230, 163, .4), rgba(50, 192, 218, .4));
+    border: .2px solid rgba(255, 255, 255, .1);
+    border-radius: 32px;
+    padding: 6px 18px;
+    font-size: .75rem;
+    font-weight: 800;
+    text-align: center;
+}
+.active_slide_roadmap{
+    opacity: 90;
+
+}
+
+/* swiper-wrapper */
+.swiper_container{
+    padding: 1rem;
+}
+
+.swiper-pagination-bullet {
+    background: #00b2c3!important;
+    padding: 2px!important;
+}
+
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: var(--swiper-pagination-bottom, 2px) !important;
+    top: var(--swiper-pagination-top, auto);
+}
+
+.swiper-wrapper {
+
+    margin-bottom: 2rem !important;
+}
+
+/* swiper-wrapper */
+
+#menuBarPriceLbl:before {
+    content: '⬢';
+    transform: rotate(30deg);
+    position: absolute;
+    font-size: 9px;
+    left: -12px;
+    top: 0px;
+}
+#menuBarPriceLbl:after {
+    content: '⬢';
+    position: absolute;
+    font-size: 9px;
+    left: -12px;
+    top: 0px;
+    animation-name: priceUpdate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes priceUpdate {
+    0% {
+        transform: rotate(30deg) scale(1);
+        opacity: .6;
+    }
+    
+    100% {
+        transform: rotate(30deg) scale(4);
+        opacity: 0;
+    }
+  }
+

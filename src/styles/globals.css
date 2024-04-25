@@ -1,0 +1,346 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Chivo:wght@500&family=Orbitron:wght@400;600;700&family=Outfit:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manjari:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&display=swap");
+
+@font-face {
+  font-family: "OutfitMedium";
+  src: url("../../public/font/Outfit-Regular.ttf");
+}
+
+@font-face {
+  font-family: "OutfitLight";
+  src: url("../../public/font/Outfit-Light.otf");
+}
+
+@font-face {
+  font-family: "NeueMachina";
+  src: url("../../public/font/NeueMachina-Ultrabold.otf");
+}
+@font-face {
+  font-family: "Audiowide";
+  src: url("../../public/font/Audiowide-Regular.ttf");
+}
+@font-face {
+  font-family: "Acme";
+  src: url("../../public/font/Acme-Regular.ttf");
+}
+@font-face {
+  font-family: "RussoOne";
+  src: url("../../public/font/RussoOne-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Twobit";
+  src: url("/font/Twobit.otf");
+}
+
+@font-face {
+  font-family: "Baseneue";
+  src: url("/font/base-neue/BaseNeueTrial-Medium-BF63d645fc6ba32.ttf") ,
+       url("/font/base-neue/BaseNeueTrial-ExtraBold-BF63d645e090cab.ttf") ,
+       url("/font/base-neue/BaseNeueTrial-ExtraLight-BF63d645e348136.ttf") ,
+       url("/font/base-neue/BaseNeueTrial-CondExtLt-BF63d645e34b48d.ttf") ,
+       url("/font/base-neue/BaseNeueTrial-ExtraLight-BF63d645e348136.ttf") ;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "Ruberoid";
+  src: url("/font/Ruberoid/Ruberoid-ExtraBold.ttf"),
+  url("/font/Ruberoid/Ruberoid-Bold.ttf") ;
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Ruberoid";
+  src : url("/font/Ruberoid/Ruberoid-Light.ttf");
+  font-weight: 400;
+
+}
+
+body,
+html {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 0rem;
+  margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+  /* overflow-x: hidden !important; */
+}
+
+@layer components {
+  .nav_link_li {
+    @apply relative flex items-center text-white gap-2 text-sm font-medium   cursor-pointer rounded  dark:hover:bg-slate-800 p-4 transition-all;
+  }
+  .boxHeader {
+    @apply text-sm dark:gdText;
+  }
+  .boxmidHeader {
+    @apply text-2xl md:text-2xl font-extrabold dark:text-[#667D94];
+  }
+  .boxShdark {
+    @apply boxShDark;
+  }
+  .box {
+    @apply bg-transparent md:bg-[#FFFFFF] py-4  minphone:dark:border-b md:rounded-2xl md:dark:bg-darkbg phone:border-[#DCDCDC] phone:dark:border-[#27333F] minphone:dark:border-[#0DDACE] border-[#DCDCDC]  phone:bg-[#ffffff00] minphone:boxsh minphone:dark:boxshDark phone:border-t;
+  }
+  .towcolbox {
+    @apply px-2 md:px-6 items-center flex flex-row  justify-between md:gap-5;
+  }
+  .phBox {
+    @apply phone:w-[65%];
+  }
+  .border_color {
+    @apply border-[#80ffcc] border-[2px];
+  }
+  .tranfer_lebel {
+    @apply sm:text-base text-base font-normal dark:text-white capitalize;
+  }
+  .boxPadding {
+    @apply flex flex-col gap-1;
+  }
+  .gdText {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-[#80FFCC] to-[#0DDACE];
+  }
+  .gdcolordark {
+    @apply gdcolorDark;
+  }
+  .boxshDark {
+    @apply boxShDark;
+  }
+  .boxsh {
+    @apply boxSh;
+  }
+  .stopscrollpadding{
+    @apply stopscrollpaddings
+  }
+  .homebtn {
+    @apply h-11 px-[25px] py-2.5   hover:scale-105 transition-all hover:bg-opacity-75 bg-gradient-to-b flex items-center from-teal-300 to-teal-500 rounded-[5px]  gap-2.5  text-neutral-900 text-base font-extrabold  leading-normal;
+  }
+  .sectionPadding{
+    @apply px-6 md:px-2
+  }
+}
+
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo{
+  -webkit-text-fill-color: #0000;
+  /* animation: textShine 5s linear infinite; */
+  background: linear-gradient(90deg, #00b2c3 20%, #6ebd0a 40%, #fefefe 60%, #ffeb3b 80%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-size: 200% auto;
+  text-align: center;
+}
+.titleHeading{
+    -webkit-text-fill-color: #0000;
+    /* animation: textShine 5s linear infinite; */
+    background: linear-gradient(90deg, #75c6e5 20%, #abe8a0 40%, #fefefe 60%, #abe8a0 80%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-size: 200% auto;
+    text-align: center;
+}
+.spanAnimation{
+  animation: spin 10s linear infinite;
+}
+.hoverscale:hover{
+  opacity: 50 !important;
+
+}
+
+.fotterbg {
+ background-image: url("../../public/fotter/BG.png"); 
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.herobg {
+  background-image: url("../../public/backgrond/qw5.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: all .5s ease;
+}
+
+.mcbox {
+  background-image: url("../../public/vector/Vector12.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@keyframes scaleBackground {
+  0% {
+    background-size: 100%; /* End with 120% size (adjust as needed) */
+  }
+  25% {
+     background-size: 120%; /* End with 120% size (adjust as needed) */
+  }
+  50% {
+    background-size: 140%; /* End with 120% size (adjust as needed) */
+ }
+ 100% {
+  background-size: 100%; /* End with 120% size (adjust as needed) */
+}
+}
+.aboutbg {
+  /* background-image: url("../../public/hero/about.png"); */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+.stopscrollpaddings {
+  scroll-padding-top: 30rem;
+  /* scroll-snap-align:start !important */
+}
+@media (min-width: 800px) {
+  .stopscrollpadding {
+    scroll-margin-top: 10rem;
+    /* scroll-snap-align:start !important */
+  }
+}
+
+.alignSelf {
+  align-self: normal;
+}
+.borderColor {
+  border: 2px solid #80ffcc;
+}
+
+.toggleBTN {
+  border-image-source: linear-gradient(
+    104.73deg,
+    #80ffcc 10.41%,
+    #0ddace 89.69%
+  );
+}
+
+.tablehederbg {
+  background: rgba(69, 141, 214, 0.06);
+}
+.linebg {
+  background: linear-gradient(104.73deg, #80ffcc 10.41%, #0ddace 89.69%);
+  box-shadow: 0px 0px 16px 0px #80ffcc;
+}
+.card-outline-2 {
+  background: linear-gradient(120.02deg,hsla(0,0%,100%,.25) 8.27%,hsla(76,76%,80%,.2) 33.42%,rgba(99,173,241,.3) 68.31%,rgba(255,0,175,.5) 103.28%);
+}
+
+.connet_btn {
+  background: linear-gradient(104.73deg, #80ffcc 10.41%, #0ddace 89.69%);
+}
+.white_bg {
+  background: rgba(255, 255, 255, 1);
+}
+.grbtnbg {
+  background: linear-gradient(104.73deg, #80ffcc 10.41%, #0ddace 89.69%);
+}
+.bgDark {
+  background: rgba(12, 22, 33, 1);
+}
+.boxSh {
+  box-shadow: 4px 4px 8px 0px #d9d9d940;
+}
+.boxShDark {
+  box-shadow: 0px 0px 0px 0px #d9d9d940;
+}
+.endBtn {
+  box-shadow: 0px 0px 16px 0px #fe03f5;
+  padding: 5px 15px 5px 15px;
+  border-radius: 5px;
+}
+.gdcolor {
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(to right, #80ffcc, #0ddace) border-box;
+  border-radius: 50em;
+  border: 2px solid transparent;
+}
+
+
+.gdcolorDark {
+  background: linear-gradient(#090f15, #090f15) padding-box,
+    linear-gradient(to right, #80ffcc, #0ddace) border-box;
+  border-radius: 50em;
+  border: 2px solid transparent;
+}
+#submanu-collapse-box{
+  transition:all 0.5s ease;
+}
+.button__wrap {
+  border: 1px solid rgba(77, 77, 77, .4);
+  border-radius: 2px;
+  padding: .2rem;
+  overflow: hidden;
+  
+}
+
+#partnerdiv::after {
+  position: absolute;
+  content: "";
+  width: 92%;
+  height: 16px;
+  background-color: white;
+  top: -16px;
+  border-radius: 13px 10px 0px 0px;
+}
+
+/* Hide the scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Add custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #99f7a9;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #090909;
+}
+
+
+.textShine {
+  text-align: center;
+
+  background: linear-gradient(
+    to right,
+    #9476e9 20%,
+    rgba(151, 224, 6, 0.918) 40%,
+    rgb(218, 95, 197) 60%,
+    #f075d2 80%
+  );
+  background-size: 200% auto;
+
+  color: #000;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: textShine 1s linear infinite;
+}
+
+@keyframes textShine {
+  to {
+    background-position: 200% center;
+  }
+}
