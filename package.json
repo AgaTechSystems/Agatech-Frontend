@@ -67,7 +67,7 @@
 		"@types/react-daterange-picker": "^2.0.8",
 		"@types/react-timeago": "^4.1.7",
 		"autoprefixer": "^10.4.16",
-		"postcss": "^8.4.34",
+		"postcss": "^8.4.35",
 		"tailwindcss": "^3.3.5"
 	}
 }
