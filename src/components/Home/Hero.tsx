@@ -44,7 +44,7 @@ function Hero({}: Props) {
           {/* heading  */}
 
           <h1 className="text-3xl middlePro:text-2xl w-[95%] md:w-full mx-auto drop-shadow-[0_0_16px_rgba(0,40,40,0.8)] md:text-5xl xl:text-7xl titleHeading text-white capitalize text-center font-Ruberoid font-bold xl:leading-[80px] pt-3 ">
-          Where Tomorrow <br />Transacts  Today ? 
+          Where Tomorrow <br />Transacts  Today 
                
           </h1>
 
