@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import walletSlice from "./walletSlice";
+import swapslice from './reducer/swapslice';
 const store = configureStore({
     reducer: {
-        wallet:walletSlice,
+        swapState:swapslice,
 
     },
 });

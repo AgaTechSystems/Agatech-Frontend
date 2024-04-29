@@ -43,6 +43,10 @@
     font-weight: 800;
     text-align: center;
 }
+.bg_swap_btn{
+    background-image: linear-gradient(rgba(134, 230, 163, .4), rgba(50, 192, 218, .4)), linear-gradient(90deg, rgba(134, 230, 163, .4), rgba(50, 192, 218, .4));
+
+}
 .active_slide_roadmap{
     opacity: 90;
 
@@ -101,3 +105,36 @@
     }
   }
 
+
+.justify-baseline{
+    justify-items: baseline;
+}
+
+.sidenav-content{
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+.sidenav-content::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    width: 1228px;
+    height: 1228px;
+    left: -742px;
+    top: -50px;
+    background: radial-gradient(50% 50% at 50% 50%, rgb(40 176 119 / 41%) 0%, rgba(6, 19, 31, 0) 100%);
+    opacity: .7;
+}
+
+.sidenav-content::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    width: 1146px;
+    height: 1146px;
+    right: -750px;
+    top: 50px;
+    background: radial-gradient(50% 50% at 50% 50%, rgb(40 176 119 / 41%) 0%, rgba(6, 19, 31, 0) 100%);
+    opacity: .7;
+}

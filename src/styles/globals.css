@@ -72,6 +72,10 @@ html {
   /* overflow-x: hidden !important; */
 }
 
+* {
+  box-sizing: border-box;
+}
+
 @layer components {
   .nav_link_li {
     @apply relative flex items-center text-white gap-2 text-sm font-medium   cursor-pointer rounded  dark:hover:bg-slate-800 p-4 transition-all;
@@ -124,8 +128,43 @@ html {
   .sectionPadding{
     @apply px-6 md:px-2
   }
+  .AllPading {
+    @apply max-w-7xl m-auto;
+  }
+
+  .sButton {
+    @apply px-10 py-5 bg-gradient-to-r from-[#DAA200] to-[#FFD600] justify-start items-start gap-2.5 inline-flex rounded-lg;
+  }
+  .bText {
+    @apply text-neutral-900 text-base font-bold  leading-normal;
+  }
+  .systeamGrids {
+    @apply systeamGrid;
+  }
+  .header_link_li {
+    @apply text-sm font-normal  leading-[18px];
+  }
+  .nav_link_li{
+    @apply text-zinc-100 text-base mt-4 flex py-3 pr-4 pl-3 md:p-0 flex-col md:mt-0 md:flex-row md:space-x-8 md:font-medium font-normal  leading-normal px-2 xl:px-0 border-t md:border-none xl:py-0 border-[#2f2d2d]
+  }
+  .stake_btn{
+    @apply  transition-all sm:w-[150px] hover:opacity-70 font-semibold text-white  sm:h-[44px] w-auto h-auto sm:py-0 py-2 bg-gradient-to-r from-[#DAA200] to-[#FFD600]  rounded-[10px] flex sm:flex-initial flex-1 items-center justify-center   disabled:bg-slate-500 disabled:cursor-not-allowed
+  }
+
+   .swapBtn{
+    @apply transition-all text-sm  hover:opacity-70 font-semibold w-full text-white   py-5 swapbtn rounded-3xl flex items-center justify-center   disabled:bg-slate-500 disabled:cursor-not-allowed
+   }
+   .box_style_nft_layers{
+    @apply box_style_nft_layer
+   }
+   .stopscrollmargin{
+    @apply stopscrollpadding
+   }
 }
 
+.swapbtn{
+  background: linear-gradient(99deg, #DAA200 0%, #FFD600 100%);
+}
 
 @keyframes spin {
   from {

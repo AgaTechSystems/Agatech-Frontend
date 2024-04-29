@@ -1,0 +1,34 @@
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: #1a1917;
+  backdrop-filter: blur(5px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 10px;
+  padding: 1.6rem 2rem;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+.title {
+  font-family: "Avenir";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 19px;
+  line-height: 26px;
+  text-transform: capitalize;
+  color: #d8aa2e;
+}
+
+.value {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 37px;
+  line-height: 47px;
+  text-transform: capitalize;
+
+  color: #ffffff;
+}
