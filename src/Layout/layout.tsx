@@ -4,7 +4,6 @@ import Nav from "@/components/Header/Header";
 
 import GoToTop from "@/components/Gtop/GoToTop";
 import { useAccount } from "wagmi";
-import { setNetwork } from "@/store/walletSlice";
 import { useNetwork, useSwitchNetwork } from "wagmi";
 import Fotter from "@/components/Fotter/Fotter";
 import AOS from "aos";

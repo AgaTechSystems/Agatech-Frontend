@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SwapCurrencyInputPanel from "./Helper/SwapCurrencyInputPanel";
 import MiddeToggle from "./MiddeToggle";
-import Outputinfo from "./Helper/Outputinfo";
-import Header from "./Header";
+
 import { TokenList } from "../model/TokenList";
 import { Settings } from "../model/Settings";
 import { toggleTokenListModal } from "@/store/reducer/swapslice";
@@ -15,8 +14,9 @@ import { useAccount, useNetwork } from "wagmi";
 import { useDebounce } from "../../hooks/useDebounce";
 import { FormatEther } from "@/utils/numbers";
 import ScaleLoader from "react-spinners/ScaleLoader";
-import Swapconnetbtn from "@/components/connetbutton/ConnectButton";
+import Swapconnetbtn from "@/components/connetbutton/swapConnetbtn";
 import { useEthersSigner } from "@/hooks/useEthersSigner";
+import ToggleInfo from "./Helper/ToggleInfo";
 
 import {
   SmartRouter,
@@ -33,7 +33,7 @@ function Swapform({}: Props) {
   const chainID = 56;
   const dispatch = useAppdispatch();
   const { address } = useAccount();
-  const  signer = useEthersSigner();
+  const signer = useEthersSigner();
   const { chain } = useNetwork();
   const isWRONG_NETWORK = chainID == chain?.id;
   useEffect(() => {
@@ -47,7 +47,7 @@ function Swapform({}: Props) {
   // Single object to store both input and output information
   const [swapinputInfo, setswapinputInfo] = useState({
     [Field.INPUT]: {
-      amount: "0",
+      amount: "1",
     },
     [Field.OUTPUT]: {
       amount: "0",
@@ -77,6 +77,8 @@ function Swapform({}: Props) {
     balanceload,
     activeField,
     UpdateBalance,
+    callData,
+    callvalue
   } = useUpdateCurrencies(chainID, signer, address);
 
   const { approve, SetApproveToken, HandleSwap, loading } = useTransation(
@@ -159,17 +161,10 @@ function Swapform({}: Props) {
       console.log("Low balance. Please check your input amount.");
       toast.info("Low balance. Please check your input amount.");
     } else {
-      // Continue with the trade if the balance is sufficient
-      const route: any = bestRoute;
-      const { value, calldata } = SwapRouter.swapCallParameters(route, {
-        recipient: address,
-        slippageTolerance: new Percent(allowedSlippage),
-      });
-
       const tx = {
         to: SMART_ROUTER_ADDRESSES[chainID],
-        data: calldata,
-        value: hexToBigInt(value),
+        data: callData,
+        value: hexToBigInt(callvalue),
       };
       HandleSwap(tx).then((e) => {
         if (e.isDone) {
@@ -178,6 +173,8 @@ function Swapform({}: Props) {
       });
     }
   };
+
+
 
   const Approve = async () => {
     if (!isWRONG_NETWORK) return;
@@ -197,11 +194,7 @@ function Swapform({}: Props) {
   };
 
   return (
-    <div
-      id="swap"
-    
-      className=" py-2 "
-    >
+    <div id="swap" className=" py-2 swap_main ">
       {/* token input  */}
       {/* <Header openSettingmodel={OpenSettingModel} /> */}
       <div>
@@ -212,9 +205,7 @@ function Swapform({}: Props) {
           }
           field={Field.INPUT}
           currencies={currencies.INPUT}
-           amount={swapinputInfo[Field.INPUT].amount}
-      
-        
+          amount={swapinputInfo[Field.INPUT].amount}
           handleChange={handleAmountChange}
           bestRouteAmount={roundedOutputAmount}
           currencyBalances={currencyBalances}
@@ -235,6 +226,14 @@ function Swapform({}: Props) {
           balanceload={balanceload == "pending"}
           titletext="You receive"
         />
+        <ToggleInfo
+          currencies={currencies}
+          roundedInputAmount={roundedInputAmount}
+          roundedOutputAmount={roundedOutputAmount}
+          loading={SwapInfo.loading == "pending"}
+          allowedSlippage={allowedSlippage}
+        />
+
         {/* <Outputinfo
           currencies={currencies}
           roundedInputAmount={roundedInputAmount}
@@ -266,7 +265,11 @@ function Swapform({}: Props) {
               />
             </button>
           ) : (
-            <button disabled={loading} onClick={Trade} className="swapBtn bg_swap_btn">
+            <button
+              disabled={loading}
+              onClick={Trade}
+              className="swapBtn bg_swap_btn"
+            >
               {!loading && "Swap"}
               <ScaleLoader
                 height={20}

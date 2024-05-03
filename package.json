@@ -69,6 +69,7 @@
 		"@types/lodash": "^4.14.202",
 		"@types/react-copy-to-clipboard": "^5.0.7",
 		"@types/react-daterange-picker": "^2.0.8",
+		"@types/react-lazy-load-image-component": "^1.6.4",
 		"@types/react-modal": "^3.16.3",
 		"@types/react-timeago": "^4.1.7",
 		"autoprefixer": "^10.4.16",

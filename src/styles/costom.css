@@ -138,3 +138,13 @@
     background: radial-gradient(50% 50% at 50% 50%, rgb(40 176 119 / 41%) 0%, rgba(6, 19, 31, 0) 100%);
     opacity: .7;
 }
+
+/* swap */
+.swap_autoheight {
+    transition: height .4s ease !important;
+}
+
+.swap_main {
+    transition: height 250ms ease !important;
+}
+/* swap */

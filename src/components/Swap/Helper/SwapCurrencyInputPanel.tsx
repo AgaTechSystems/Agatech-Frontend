@@ -7,6 +7,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { formatAmount } from "@/utils/numbers";
 import Skeleton from "@/components/Loading/Skeleton";
 import Balanceadder from "./Balanceadder";
+import SkeletonLoad from "./SkeletonLoad";
+
 type Props = {
   field: Field;
   currencies: TOKEN | undefined;
@@ -16,7 +18,7 @@ type Props = {
   bestRouteAmount?: string | null; // Additional prop for bestRoute output amount
   currencyBalances: { [field in Field]?: string };
   balanceload: boolean;
-  titletext:string
+  titletext: string;
 };
 
 function SwapCurrencyInputPanel({
@@ -28,7 +30,7 @@ function SwapCurrencyInputPanel({
   bestRouteAmount,
   currencyBalances,
   balanceload,
-  titletext
+  titletext,
 }: Props) {
   const dispatch = useAppdispatch();
   const showModel = () => {
@@ -48,7 +50,7 @@ function SwapCurrencyInputPanel({
       handleChange(field, calculatedAmount);
     }
   };
- 
+
   return (
     <div className="bg-[#272626]  bg-opacity-50 space-y-2 slimeborder  rounded-3xl  px-5  gap-2.5 py-3 ">
       <div className="flex flex-row justify-between">
@@ -94,24 +96,28 @@ function SwapCurrencyInputPanel({
             </div>{" "}
           </button>
         </div>
-        <input
-          // disabled={loading}
-          type="text"
-          title="Only numeric values are allowed."
-          pattern="^[0-9]*(\.[0-9]*)?$"
-          placeholder="0.00"
-          className={`${loading ? "opacity-40" : ""}  font-bold
+        {loading ? (
+         <SkeletonLoad h="20"/>
+        ) : (
+          <input
+            // disabled={loading}
+            type="text"
+            title="Only numeric values are allowed."
+            pattern="^[0-9]*(\.[0-9]*)?$"
+            placeholder="0.00"
+            className={`${loading ? "opacity-40" : ""}  font-bold
               outline-none border-transparent flex-end text-base md:text-xl
               focus:border-transparent focus:ring-0 
               text-end bg-transparent border-none forced-colors:bg-clip-border min-h-[24px] !p-0 focus:bg-none focus:border-none text-white  rounded-2xl w-full`}
-          value={amount}
-          onChange={(e) => handleChange(field, e.target.value)}
-          style={{
-            border: "none",
+            value={amount}
+            onChange={(e) => handleChange(field, e.target.value)}
+            style={{
+              border: "none",
 
-            appearance: "none",
-          }}
-        />
+              appearance: "none",
+            }}
+          />
+        )}
       </div>
       <Balanceadder handlePercentageClick={handlePercentageClick} />
     </div>

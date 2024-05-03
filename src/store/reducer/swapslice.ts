@@ -12,7 +12,7 @@ export const EMPTY_DERIVED_SWAP_INFO: SwapInfo = Object.freeze({
   // inputTax: new Percent(0),
   // outputTax: new Percent(0),
   // autoSlippage: new Percent(0),
-  allowedSlippage: "5",
+  allowedSlippage: "0.5",
   trade: undefined,
   txTime: "20",
   activeField:Field.INPUT
@@ -81,7 +81,7 @@ const Swapslice = createSlice({
     
   },
   extraReducers: (builder) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+   
     builder.addCase(getRoute.pending, (state) => {
       // Handle the pending state if needed
       state.swap.loading = "pending"
@@ -91,11 +91,10 @@ const Swapslice = createSlice({
       state.swap.loading = 'done';
   
     });
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+
     builder.addCase(getRoute.rejected, (state, action) => {
  
     }),
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     builder.addCase(getBalance.pending, (state) => {
       state.balanceload = 'pending'
     });

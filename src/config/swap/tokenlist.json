@@ -8,12 +8,12 @@
     ],
     "tokens": [
       {
-        "name": "Trust Ai",
-        "address": "0x50C7584be73D20760f1947fFcbF7942822C968C8",
-        "symbol": "TRT",
+        "name": "Agatech",
+        "address": "0xb427e47e8fDD678278d2A91EEaC014ffcDDaF029",
+        "symbol": "AGATA",
         "decimals": 18,
         "chainId": 56,
-        "logoURI": "https://www.trust-ai.io/tokenprice/TRT.png"
+        "logoURI": "https://assets.coingecko.com/coins/images/35835/thumb/IMG_20240229_111252_206.jpg?1709888815"
       },
       {
         "name": "Binance smart chain",

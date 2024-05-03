@@ -11,6 +11,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
+import Customconnetbtn from "../connetbutton/Customconnetbtn";
 
 const Nav = () => {
   const router = useRouter();
@@ -99,6 +100,7 @@ const Nav = () => {
           >
             <div className="block md:hidden px-6 py-4">
               <NavLinks />
+              <Customconnetbtn/>
             </div>
 
             <div className="pt-2 pb-2 flex justify-center space-x-4 mt-3"></div>
@@ -106,6 +108,7 @@ const Nav = () => {
 
           <div className="hidden md:flex md:gap-5">
             <NavLinks />
+            <Customconnetbtn/>
           </div>
 
           {/* <div className="flex items-center space-x-4 max-md:hidden">

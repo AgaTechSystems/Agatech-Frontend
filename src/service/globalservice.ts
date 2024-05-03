@@ -4,7 +4,7 @@ import axios from "axios";
 
 const globalService = {
   routeswap: (data: any, config: any) => {
-    return newRequest.post(`/getRouter`, data);
+    return newRequest.post(`global/getRouter`, data);
   },
 };
 

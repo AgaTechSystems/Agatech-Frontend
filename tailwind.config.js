@@ -46,7 +46,8 @@ module.exports = {
          "darkbox":"#0C1621",
          "black":"#000000",
          "darkGraytext":"#667D94",
-         "lightGray":"#A5BBD0"
+         "lightGray":"#A5BBD0",
+         "skeleton-gray":"#434040"
       },
     },
     screens: {
