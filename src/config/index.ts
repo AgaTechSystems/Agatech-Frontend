@@ -9,7 +9,7 @@ export const MIN_BUY = 10;
 ///0x2eE11aC992497BBdE1c55919fd8F0e5285eB7041
 
 export const HeroBtn = [
-  { name: "Whitepaper", link: "https://agatech.gitbook.io/agatech-whitepaper/" },
+  { name: "Launch App", link: "/swap" },
   { name: "Buy", link: "https://pancakeswap.finance/swap?outputCurrency=0xb427e47e8fDD678278d2A91EEaC014ffcDDaF029" },
 
 ];

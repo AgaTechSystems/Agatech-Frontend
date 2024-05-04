@@ -139,6 +139,18 @@
     opacity: .7;
 }
 
+@media(max-width:600px){
+    .sidenav-content::before {
+        background: none;
+   
+    }
+    .sidenav-content::after {
+        background: none;
+   
+    }
+    
+}
+
 /* swap */
 .swap_autoheight {
     transition: height .4s ease !important;

@@ -52,7 +52,7 @@ function Swap({}: Props) {
 
         {/* tab */}
         {activeTabIndex == 0 && <Swapform />}
-        {activeTabIndex == 1 && <div>buy crypto with card</div>}
+        {activeTabIndex == 1 && <div className="text-white min-h-[200px] text-center">coming soon!</div>}
       </div>
     </div>
   );
