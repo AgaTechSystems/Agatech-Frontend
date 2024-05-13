@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swapform from "@/components/Swap/Swapform";
 import { swap_tab } from "@/config/swap";
 import Customconnetbtn from "@/components/connetbutton/Customconnetbtn";
 import { useAppdispatch } from "@/hooks/redux";
 import { togglesettingModal } from "@/store/reducer/swapslice"; // Update the path accordingly
+import qs from "qs";
+
 type Props = {};
 
 function Swap({}: Props) {
@@ -13,6 +15,8 @@ function Swap({}: Props) {
   const OpenSettingModel = () => {
     dispatch(togglesettingModal(0));
   };
+
+
 
   return (
     <div className="min-h-screen pt-20 flex flex-col justify-center  items-center sidenav-content relative pb-24 ">
@@ -52,7 +56,11 @@ function Swap({}: Props) {
 
         {/* tab */}
         {activeTabIndex == 0 && <Swapform />}
-        {activeTabIndex == 1 && <div className="text-white min-h-[200px] text-center">coming soon!</div>}
+        {activeTabIndex == 1 && (
+          <div className="text-white min-h-[200px] text-center">
+            coming soon!
+          </div>
+        )}
       </div>
     </div>
   );

@@ -64,6 +64,5 @@ export const ConvertEthTonormal = async (amount: any, decimals: number) => {
 
 export const FormatUnit = async (amount: any, decimals: number) => {
   const _amount = await ethers.utils.parseUnits(amount.toString());
-
   return _amount.toString();
 };

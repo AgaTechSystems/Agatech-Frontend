@@ -7,7 +7,7 @@ function SkeletonLoad({h}:Props) {
     return (
       <div
         role="status"
-        className="space-y-8 animate-pulse md:space-y-0 md:space-x-8 md:flex items-center w-[50%] h-[16px]"
+        className="space-y-8 flex-end animate-pulse md:space-y-0 md:space-x-8 md:flex items-center max-w-[200px]  w-[100%] h-[16px]"
         style={{
           height:`${h}px`
         }}

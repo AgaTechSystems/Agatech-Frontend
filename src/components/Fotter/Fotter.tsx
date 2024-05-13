@@ -18,7 +18,7 @@ function Fotter({}: Props) {
   return (
     <div className="stopscrollpadding" id="contact">
       {/* box */}
-      <div className="px-3">
+      <div className="px-3 pt-5">
         <div className="max-w-7xl   slimeborder service-card_wrapper py-10 md:py-32 space-y-10   rounded-[36px] bg-opacity-75  mx-auto font-Ruberoid  ">
           <div className=" text-center text-white text-2xl font-bold md:text-5xl  leading-[68px]">
             Join The Community

@@ -6,10 +6,11 @@ import axios from "axios";
 
 interface GetRouteParams {
   chainId: number;
-  currencyAmount: number;
+  currencyAmount: string;
   inputCurrency: TOKEN | undefined;
   outputCurrency: TOKEN | undefined;
   TradeType: TradeType;
+  user:any
 }
 
 // Create async thunk with explicit types
@@ -20,19 +21,14 @@ const getRoute = createAsyncThunk(
       if (signal.aborted) {
         throw new Error('stop the work, this has been aborted!');
       }
-      
-      // Attach the signal to the input parameters
-      const paramsWithAbortSignal = {
-        ...params,
-      };
-      
+    
       const trade = await RouteTrade(
         params.chainId,
         params.currencyAmount,
         params.inputCurrency,
         params.outputCurrency,
         params.TradeType,
-        []
+        params.user
       );
 
       return trade;

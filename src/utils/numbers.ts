@@ -103,97 +103,16 @@ export const hexToInt = (s: any) => {
   return parseInt(bn.toString());
 };
 
-export function calculateStakingPercentage(
-  totalBalance: string,
-  stakedAmount: string
-) {
-  if (Number(totalBalance) <= 0) {
-    return 100;
+export const CountParser = (value:number, fixTo = 2) => {
+  if (+value < 1000) {
+      if (Number.isInteger(value)) {
+          return value;
+      } else {
+          return Number(value.toFixed(fixTo));
+      }
+  } else if (+value < 1000000) {
+      return (value / 1000).toFixed(1) + "k";
+  } else {
+      return (value / 1000000).toFixed(1) + "M";
   }
-
-  const stakingPercentage = (Number(stakedAmount) / Number(totalBalance)) * 100;
-
-  // Cap the staking percentage at 100%
-  const cappedPercentage = Math.min(stakingPercentage, 100);
-
-  return Math.round(cappedPercentage * 100) / 100;
-}
-
-export function LongerPaysBetter(hex: number, days: number): number {
-  // Check if days is greater than or equal to 1
-  if (days < 1) {
-    return 0;
-  }
-
-  // Perform the calculation
-  const result = (hex * (days - 1)) / 1820;
-
-  return Number(result.toFixed(5));
-}
-
-export function BiggerPaysBetter(input: number): number {
-  // Calculate the minimum value between input and 150 million
-  const minValue: number = Math.min(input, 150e6);
-
-  // Calculate the ratio between the minimum value and 1.5 billion
-  const ratio: number = minValue / 1500e6;
-
-  // Calculate the bonus by multiplying the input by the ratio
-  const bonus: number = input * ratio * 10 ** 8;
-
-  return Number(bonus.toFixed(5));
-}
-
-export function calculateShares(
-  hexAmount: number,
-  perSharePrice: number
-): number {
-  // Check if hexAmount is greater than or equal to 0
-  if (hexAmount < 0) {
-    return 0;
-  }
-
-  // Check if perSharePrice is greater than 0
-  if (perSharePrice <= 0) {
-    return 0;
-  }
-
-  // Calculate the number of shares
-  const shares = hexAmount / perSharePrice;
-
-  return Number(shares.toFixed(5));
-}
-
-export function calculateRewardPercentage(
-  principal: number,
-  reward: number,
-  emergencyEndDay: number,
-  stakeDays: number
-): number {
-  const hasServed50Percent = emergencyEndDay >= stakeDays / 2;
-  const percentage = hasServed50Percent ? (reward / principal) * 100 : 0;
-  return Math.min(percentage, 100);
-}
-
-export function calculateReward(
-  startTime: number,
-  endTime: number,
-  rewardRate: number,
-  amount: number,
-  rewardTokenDecimals: number,
-  stakingTokenDecimals: number
-): number {
-  const elapsedTime = Math.max(
-    0,
-    Math.min(Date.now() / 1000 - startTime, endTime)
-  );
-  const totalTime = endTime < elapsedTime ? endTime : elapsedTime;
-
-  const reward =
-    (amount * totalTime * rewardRate * Math.pow(10, rewardTokenDecimals)) /
-    (365 * 24 * 60 * 60) /
-    100 /
-    Math.pow(10, stakingTokenDecimals);
-
-  return reward;
-}
+};

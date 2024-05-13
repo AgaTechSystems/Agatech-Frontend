@@ -39,7 +39,9 @@
 		"moment-range": "^4.0.2",
 		"next": "13.4.0",
 		"next-themes": "^0.2.1",
+		"node-cache": "^5.1.2",
 		"numbro": "^2.4.0",
+		"qs": "^6.12.1",
 		"react": "18.2.0",
 		"react-copy-to-clipboard": "^5.1.0",
 		"react-countdown": "^2.3.5",
@@ -67,6 +69,7 @@
 	"devDependencies": {
 		"@types/aos": "^3.0.7",
 		"@types/lodash": "^4.14.202",
+		"@types/qs": "^6.9.15",
 		"@types/react-copy-to-clipboard": "^5.0.7",
 		"@types/react-daterange-picker": "^2.0.8",
 		"@types/react-lazy-load-image-component": "^1.6.4",

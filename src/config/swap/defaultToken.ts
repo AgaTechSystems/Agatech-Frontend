@@ -10,7 +10,7 @@ const tokenListFromSDK = {
     56: {
       [Field.INPUT]: {
         "name": "Binance smart chain",
-        "address": "0x000000000000000000000000000000000000dEaD",
+        "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "symbol": "BNB",
         "decimals": 18,
         "chainId": 56,

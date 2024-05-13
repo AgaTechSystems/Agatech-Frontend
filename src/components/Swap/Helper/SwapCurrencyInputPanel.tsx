@@ -4,7 +4,7 @@ import { toggleTokenListModal } from "@/store/reducer/swapslice";
 import { useAppSelector, useAppdispatch } from "../../../hooks/redux";
 import { Token, Currency } from "@pancakeswap/sdk";
 import ClipLoader from "react-spinners/ClipLoader";
-import { formatAmount } from "@/utils/numbers";
+import { formatAmount, CountParser } from "@/utils/numbers";
 import Skeleton from "@/components/Loading/Skeleton";
 import Balanceadder from "./Balanceadder";
 import SkeletonLoad from "./SkeletonLoad";
@@ -19,6 +19,8 @@ type Props = {
   currencyBalances: { [field in Field]?: string };
   balanceload: boolean;
   titletext: string;
+  tokenRate?: number | null;
+  nativePrice: number | null;
 };
 
 function SwapCurrencyInputPanel({
@@ -31,6 +33,8 @@ function SwapCurrencyInputPanel({
   currencyBalances,
   balanceload,
   titletext,
+  tokenRate,
+  nativePrice,
 }: Props) {
   const dispatch = useAppdispatch();
   const showModel = () => {
@@ -97,7 +101,9 @@ function SwapCurrencyInputPanel({
           </button>
         </div>
         {loading ? (
-         <SkeletonLoad h="20"/>
+          <div className="w-full flex-1 float-end flex justify-end">
+            <SkeletonLoad h="20" />
+          </div>
         ) : (
           <input
             // disabled={loading}
@@ -118,7 +124,21 @@ function SwapCurrencyInputPanel({
             }}
           />
         )}
+        <br />
+        {/* <span>~$33 919 271</span> */}
       </div>
+
+      {loading ? (
+          <div className=" flex justify-end">
+          <SkeletonLoad h="20" />
+          </div>
+      ) : (
+    
+           <div className="text-white text-[13px] opacity-70 text-right !mt-[-2px] ">
+           ~$
+           {nativePrice && tokenRate && CountParser(tokenRate * Number(amount))}
+         </div>
+      )}
       <Balanceadder handlePercentageClick={handlePercentageClick} />
     </div>
   );

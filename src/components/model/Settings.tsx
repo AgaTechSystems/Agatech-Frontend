@@ -135,7 +135,7 @@ export const Settings: FC<ModalProps> = ({
               </div>
             </div>
           </div>
-
+{/* 
           <div className="space-y-2 pt-2">
             <div className="flex flex-col gap-2 text-white">
               Tx deadline (mins){" "}
@@ -149,7 +149,7 @@ export const Settings: FC<ModalProps> = ({
                 className="w-full bg-transparent flex-1 truncate appearance-none text-slate-50 outline-none  py-2 border-0 flex items-center px-3 rounded-lg font-medium bg-secondary group-hover:bg-muted group-focus:bg-accent rounded-r-none !border-r-0 flex-grow "
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Modal>

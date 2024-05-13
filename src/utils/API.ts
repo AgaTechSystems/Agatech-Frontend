@@ -6,7 +6,7 @@ const apiUrl = process.env.NODE_ENV === 'production' ? "https://api.hexcrypto.co
 
 //https://api.cipherem.xyz/api
 const newRequest = axios.create({
-  baseURL:"https://api.agatech.io/api",
+  baseURL:"http://localhost:3000/api",
   withCredentials: true,
 });
 

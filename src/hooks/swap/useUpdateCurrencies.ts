@@ -53,15 +53,7 @@ const useUpdateCurrencies = (chainId: number, signer?: any, user?: any) => {
   }, [swap]);
 
   const bestRoute = useMemo(() => {
-    return swap.trade !== undefined
-      ? SmartRouter.Transformer.parseTrade(chainId, swap.trade)
-      : {
-          outputAmount: CurrencyAmount.fromRawAmount(
-            Native.onChain(chainId),
-            0
-          ),
-          inputAmount: CurrencyAmount.fromRawAmount(Native.onChain(chainId), 0),
-        }; // Provide a default value
+   return swap.trade
   }, [swap.trade, chainId]);
 
   useEffect(() => {
@@ -74,12 +66,12 @@ const useUpdateCurrencies = (chainId: number, signer?: any, user?: any) => {
       const slippagePercent = new Percent(slippageInteger.toString());
 
       if (route) {
-        const { value, calldata } = SwapRouter.swapCallParameters(route, {
-          recipient: address,
-          slippageTolerance:slippagePercent,
-        });
-        setCallData(calldata);
-        setcallvalue(value);
+        // const { value, calldata } = SwapRouter.swapCallParameters(route, {
+        //   recipient: address,
+        //   slippageTolerance:slippagePercent,
+        // });
+        // setCallData(calldata);
+        // setcallvalue(value);
       }
     };
 
@@ -151,10 +143,11 @@ const useUpdateCurrencies = (chainId: number, signer?: any, user?: any) => {
 
   const getBestRoute = async (
     chainId: number,
-    currencyAmount: number,
+    currencyAmount: string,
     inputCurrency: TOKEN | undefined,
     outputCurrency: TOKEN | undefined,
-    TradeType: TradeType
+    TradeType: TradeType,
+    user:any
   ) => {
     await dispatch(
       getRoute({
@@ -163,9 +156,12 @@ const useUpdateCurrencies = (chainId: number, signer?: any, user?: any) => {
         inputCurrency,
         outputCurrency,
         TradeType,
+        user
       })
     );
   };
+
+
 
   const UpdateBalance = () => {
     dispatch(

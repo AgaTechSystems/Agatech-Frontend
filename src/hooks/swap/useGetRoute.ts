@@ -3,6 +3,10 @@ import { useAppdispatch } from "@/hooks/redux";
 import { getRoute } from "@/store/action/swap/swapaction";
 import { TOKEN } from "../../../typeing";
 import { TradeType } from "@pancakeswap/sdk";
+import { FormatUnit } from "@/utils/contracthelper";
+import { getQuote } from "@/utils/swap/bsc/Route";
+import { useAccount } from "wagmi";
+
 interface UseGetRouteParams {
   currencies?: {
     INPUT?: TOKEN;
@@ -11,73 +15,117 @@ interface UseGetRouteParams {
   swapinputInfo: any; // Adjust the type as needed
   SwapInfo: {
     activeField: string; // Adjust the type as needed
+    allowedSlippage:string
   };
   chainID: number;
   debounceData: any;
+  address:any
 }
 
-const useGetRoute = ({
+const useGetRoute =  ({
   currencies,
   swapinputInfo,
   SwapInfo,
   chainID,
   debounceData,
+  address
 }: UseGetRouteParams) => {
   const dispatch = useAppdispatch();
 
+  console.log(SwapInfo,"SwapInfo");
+  
+
   useEffect(() => {
-    if (!currencies) return;
+    const fetchData = async () => {
+      // Define an inner async function
+      if (!currencies) return;
 
-    let routePromise: any = null;
+      let routePromise: any = null;
 
-    if (SwapInfo.activeField === "INPUT") {
-      const token = currencies.INPUT;
-      if (!token) return;
-      const inputAmount =
-        Number(swapinputInfo.INPUT.amount) * 10 ** token.decimals;
-      // Check if inputAmount is a valid number
-      if (!isNaN(inputAmount) && isFinite(inputAmount)) {
-        const params = {
-          chainId: chainID,
-          currencyAmount: inputAmount,
-          inputCurrency: currencies?.INPUT,
-          outputCurrency: currencies?.OUTPUT,
-          TradeType: TradeType.EXACT_INPUT,
-        };
-       
-        routePromise = dispatch(getRoute(params));
+      if (SwapInfo.activeField === "INPUT") {
+        const token = currencies.INPUT;
+        if (!token) return;
+
+        if(Number( swapinputInfo.INPUT.amount) ==0 && Number( swapinputInfo.OUTPUT.amount)) return;
+
+        const inputAmount = await FormatUnit(
+          swapinputInfo.INPUT.amount,
+          token.decimals
+        );
+
+        if (!isNaN(Number(inputAmount)) && isFinite(Number(inputAmount))) {
+          const params = {
+            chainId: chainID,
+            currencyAmount: inputAmount,
+            inputCurrency: currencies?.INPUT,
+            outputCurrency: currencies?.OUTPUT,
+            TradeType: TradeType.EXACT_INPUT,
+            user:address,
+             slippagePercentage:SwapInfo.allowedSlippage
+          };
+
+          routePromise = dispatch(getRoute(params));
+        }
+      } else {
+        const token = currencies.OUTPUT;
+        if (!token) return;
+        const outputAmount = await FormatUnit(
+          swapinputInfo.OUTPUT.amount,
+          token.decimals
+        );
+
+        if (!isNaN(Number(outputAmount)) && isFinite(Number(outputAmount))) {
+          const params = {
+            chainId: chainID,
+            currencyAmount: outputAmount,
+            inputCurrency: currencies.OUTPUT,
+            outputCurrency: currencies.INPUT,
+            TradeType: TradeType.EXACT_OUTPUT,
+            user:address,
+            slippagePercentage:SwapInfo.allowedSlippage
+          };
+
+          routePromise = dispatch(getRoute(params));
+        }
       }
-    } else {
-      const token = currencies.OUTPUT;
-      if (!token) return;
-      const outputAmount =
-        Number(swapinputInfo.OUTPUT.amount) * 10 ** token.decimals;
-      console.log(!isNaN(outputAmount));
 
-      // Check if outputAmount is a valid number
-      if (!isNaN(outputAmount) && isFinite(outputAmount)) {
-        const params = {
-          chainId: chainID,
-          currencyAmount: outputAmount,
-          inputCurrency: currencies.OUTPUT,
-          outputCurrency: currencies.INPUT,
-          TradeType: TradeType.EXACT_OUTPUT,
-        };
- 
-        routePromise = dispatch(getRoute(params));
-      }
-    }
-
-    return () => {
-      if (routePromise != null) {
-        routePromise.abort();
-        console.log("cancel...");
-      }
+      return () => {
+        if (routePromise != null) {
+          routePromise.abort();
+          console.log("cancel...");
+        }
+      };
     };
+
+    fetchData(); // Call the inner async function
   }, [currencies, debounceData, SwapInfo.activeField, chainID]);
 
+  const getSwapQuote = async () => {
+    if (!currencies) return;
+    const token = currencies.INPUT;
+    if (!token) return;
+    const inputAmount = await FormatUnit(
+      swapinputInfo.INPUT.amount,
+      token.decimals
+    );
+
+    const res:any = await getQuote(
+      chainID,
+      inputAmount,
+      currencies.INPUT,
+      currencies.OUTPUT,
+      TradeType.EXACT_OUTPUT,
+      address,
+      SwapInfo.allowedSlippage
+      
+    );
+
+   return res?.data
+    
+  };
+
   return {
-    // Add other values you might want to expose
+    getSwapQuote
   };
 };
 

@@ -15,7 +15,8 @@ export const EMPTY_DERIVED_SWAP_INFO: SwapInfo = Object.freeze({
   allowedSlippage: "0.5",
   trade: undefined,
   txTime: "20",
-  activeField:Field.INPUT
+  activeField:Field.INPUT,
+  nativePrice:0
 });
 
 export interface SwapState {
@@ -87,8 +88,11 @@ const Swapslice = createSlice({
       state.swap.loading = "pending"
     });
     builder.addCase(getRoute.fulfilled, (state, action) => {
-      state.swap.trade = action.payload
+      console.log(action.payload,"action.payload");
+    
+      state.swap.trade = action.payload.data;
       state.swap.loading = 'done';
+      state.swap.nativePrice = Number(action.payload.nativePrice);
   
     });
 
@@ -104,9 +108,9 @@ const Swapslice = createSlice({
 
     state.swap.currencyBalances[Field.INPUT] = action.payload.inputBalance;
     state.swap.currencyBalances[Field.OUTPUT] = action.payload.outputBalance;
-    state.balanceload = "done"
-      
-      // Handle the fulfilled state and update the state accordingly
+    state.balanceload = "done";
+
+    
     });
     builder.addCase(getBalance.rejected, (state, action) => {
       state.balanceload = 'error'

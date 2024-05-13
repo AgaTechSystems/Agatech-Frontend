@@ -44,3 +44,5 @@ export function formatNumber(number: number | null | undefined) {
         return `${formattedNumber}B`;
     }
 }
+
+

@@ -1,56 +1,72 @@
-import {TOKEN} from "../../../../typeing"
+import { TOKEN } from "../../../../typeing";
 import { SmartRouter } from "@pancakeswap/smart-router";
-import {getCandidatePools} from "./poolget";
-import {QUOTING_API} from "../../../config/network"
-import {parseToken} from "./Swap"
-import AGAService from "@/service/globalservice"
-import axios from 'axios'
+import AGAService from "@/service/globalservice";
+import axios from "axios";
 
 export const RouteTrade = async (
-    chainId: number,
-    currencyAmount: number,
-    inputCurrency: TOKEN | undefined,
-    outputCurrency: TOKEN | undefined,
-    TradeType:any,
-    source:any
-  
-  ) => {
-    if (!inputCurrency || !outputCurrency) {
-      console.error("Input or output currency is undefined");
-      return;
-    }
-  
-    const A = parseToken(inputCurrency, chainId);
-    const B = parseToken(outputCurrency, chainId);
-  
-    try {
-      const pools: any = await getCandidatePools({
-        currencyA: A,
-        currencyB: B,
-        chainId: chainId,
-      });
-  
-      const data = {
-        currencyAmount: currencyAmount,
-        tradeType: TradeType,
-        currency: {
-          INPUT: inputCurrency,
-          OUTPUT: outputCurrency,
-        },
-        pools: pools.map(SmartRouter.Transformer.serializePool),
-      };
+  chainId: number,
+  currencyAmount: string,
+  inputCurrency: TOKEN | undefined,
+  outputCurrency: TOKEN | undefined,
+  TradeType: any,
+  address: any
+) => {
+  if (!inputCurrency || !outputCurrency) {
+    console.error("Input or output currency is undefined");
+    return;
+  }
 
+  try {
+    const param = {
+      sellToken: inputCurrency.address,
+      buyToken: outputCurrency.address,
+      sellAmount: currencyAmount,
+      chainId: chainId,
+      takerAddress: address,
+      feeRecipient: "0xb427e47e8fdd678278d2a91eeac014ffcddaf029",
+      skipValidation: false,
+    };
 
-      const res = await AGAService.routeswap(data,source)
-      const serializedRes = res.data;
+    const res = await AGAService.routeswap(param);
 
-      return serializedRes.route;
-    } catch (error) {
-      console.error("Error in Route:", error);
+    return res.data;
+  } catch (error) {
+    console.error("Error in Route:", error);
+  }
+};
+
+export const getQuote = async (
+  chainId: number,
+  currencyAmount: string,
+  inputCurrency: TOKEN | undefined,
+  outputCurrency: TOKEN | undefined,
+  TradeType: any,
+  address: any,
+  slippagePercentage:string
+) => {
+  if (!inputCurrency || !outputCurrency) {
+    console.error("Input or output currency is undefined");
+    return;
+  }
+
+  try {
+    const param = {
+      sellToken: inputCurrency.address,
+      buyToken: outputCurrency.address,
+      sellAmount: currencyAmount,
+      chainId: chainId,
+      takerAddress: address,
+      feeRecipient: "0xb427e47e8fdd678278d2a91eeac014ffcddaf029",
+      skipValidation: false,
+      slippagePercentage:Number(slippagePercentage)/100
+    };
+
+    const res = await AGAService.quoteswap(param);
+    console.log(res,"res");
     
-    }
-  };
-  
-  // Example usage
-  // const res = await Route(56, 10000, currencies.INPUT
-  
+   return res.data;
+  } catch {}
+};
+
+// Example usage
+// const res = await Route(56, 10000, currencies.INPUT

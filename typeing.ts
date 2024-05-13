@@ -57,6 +57,7 @@ export type SwapInfo = {
   txTime:string,
   activeField:Field
   loading: "idle" | "pending" | "done" | "error";
+  nativePrice:number
 };
 
 export interface RouteTradeParams {
