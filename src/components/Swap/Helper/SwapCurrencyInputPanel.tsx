@@ -21,6 +21,7 @@ type Props = {
   titletext: string;
   tokenRate?: number | null;
   nativePrice: number | null;
+
 };
 
 function SwapCurrencyInputPanel({
@@ -35,6 +36,7 @@ function SwapCurrencyInputPanel({
   titletext,
   tokenRate,
   nativePrice,
+
 }: Props) {
   const dispatch = useAppdispatch();
   const showModel = () => {

@@ -27,6 +27,9 @@
 .slimeborder{
     border: 0.2px solid rgba(255, 255, 255, .05);
 }
+.slimeborder-t{
+    border-top: 0.2px solid rgba(255, 255, 255, .05);
+}
 
 .service-card_wrapper {
     background-image: url("/64f194d24d3c9690e939267e_bg servicecard 1.svg"), linear-gradient(-200deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, 0));
@@ -158,5 +161,27 @@
 
 .swap_main {
     transition: height 250ms ease !important;
+}
+
+.swap_loading:before {
+    content: "";
+    animation: _1fr4hiz0 .7s linear;
+    animation-iteration-count: infinite;
+    border-radius: 50%;
+    background-image: linear-gradient(180deg, transparent 84%, #03ba5c);
+    width: 33px;
+    height: 33px;
+    top: -.5px;
+    left: -.5px;
+    /* opacity: 0; */
+    position: absolute;
+    transition: opacity .2s cubic-bezier(.4,0,.2,1);
+    z-index: -1;
+}
+
+@keyframes _1fr4hiz0 {
+    100% {
+        transform: rotate(1turn);
+    }
 }
 /* swap */

@@ -19,6 +19,7 @@ export const parseToken = (rawToken: any, chainId: number): Token => {
 interface LiquiditySource {
   name: string;
   proportion: number;
+  hops:any
 }
 
 export function calculateProportions(liquiditySources: LiquiditySource[]) {
@@ -36,10 +37,11 @@ export function calculateProportions(liquiditySources: LiquiditySource[]) {
     );
 
     // Step 2 & 3: Calculate proportions and convert to percentage
-    const proportions: { name: string; proportion: string }[] =
+    const proportions: { name: string; proportion: string,hops:any }[] =
         filteredSources.map((source) => ({
             name: source.name,
             proportion: (Number (source.proportion) / totalAmount * 100).toFixed(0),
+            hops:source?.hops,
         }));
 
     return proportions;

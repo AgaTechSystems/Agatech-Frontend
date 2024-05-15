@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { TOKEN, Field } from "../../../../typeing";
 import { formatAmountFORout } from "../../../utils/numbers";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 import SkeletonLoad from "./SkeletonLoad";
 import { formatAmount, CountParser } from "@/utils/numbers";
 import { calculateProportions } from "@/utils/swap/bsc/Swap";
+import Image from "next/image";
 type Props = {
   currencies: { [field in Field]?: TOKEN };
   roundedOutputAmount: string;
@@ -13,7 +14,9 @@ type Props = {
   allowedSlippage: string;
   outputTokenrate: number | null;
   sources?: any;
-  estimatedPriceImpact: string
+  estimatedPriceImpact: string;
+  estimatedGas: string | null;
+  nativePrice: number | null;
 };
 
 function ToggleInfo({
@@ -24,9 +27,12 @@ function ToggleInfo({
   allowedSlippage,
   outputTokenrate,
   sources,
-  estimatedPriceImpact
+  estimatedPriceImpact,
+  estimatedGas,
+  nativePrice,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const contentRef:any = useRef(null);
 
   const [toggleOutput, setToggleOutput] = useState(true);
   const [outputToInputRatio, setOutputToInputRatio] = useState("");
@@ -55,25 +61,43 @@ function ToggleInfo({
     calculateMinimumReceive();
   }, [roundedInputAmount, roundedOutputAmount, toggleOutput]);
 
-  const textLine = `text-white flex flex-row justify-between text-sm`;
+
+  useEffect(() => {
+    if (open) {
+      // If the element is open, set its height to the height of its content
+      if (contentRef.current) {
+        contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
+      }
+    } else {
+      // If the element is closed, reset its height to 0
+      if (contentRef.current) {
+        contentRef.current.style.height = "0";
+      }
+    }
+  }, [open,estimatedPriceImpact]);
+
+
+
+  const textLine = `text-white flex flex-row justify-between text-sm  py-2 slimeborder-t px-5`;
   const textLineText = ``;
   const subtext = `opacity-50`;
 
   const route_sources = calculateProportions(sources);
 
   return (
-    <div className="bg-[#272626] slimeborder bg-opacity-70 mt-4 rounded-3xl px-5 py-3">
+    <div className="bg-[#272626] slimeborder bg-opacity-70 mt-4 rounded-3xl  py-3  ">
       <button
         onClick={() => setOpen(!open)}
-        className="flex flex-row w-full items-center justify-between"
+        className="flex flex-row w-full items-center justify-between px-5 "
       >
         <div
           onClick={(e) => {
             e.stopPropagation();
             setToggleOutput(!toggleOutput);
           }}
-          className={`text-sm text-white text-start ${loading ? "w-full" : "w-full"
-            } `}
+          className={`text-sm text-white text-start ${
+            loading ? "w-full" : "w-fit"
+          } `}
         >
           {loading ? (
             <SkeletonLoad h="15" />
@@ -86,32 +110,36 @@ function ToggleInfo({
 
         <div>
           <ChevronUpIcon
-            className={`h-5 w-5 text-white font-bold transform ${open ? "rotate-180" : ""
-              } transition-transform duration-300`}
+            className={`h-5 w-5 text-white font-bold transform ${
+              open ? "rotate-180" : ""
+            } transition-transform duration-300`}
           />
         </div>
       </button>
 
       <div
-        className={`transition-max-height swap_autoheight overflow-hidden   ${open ? "h-[160px]" : "h-0"
-          }`}
+        className={`transition-max-height swap_autoheight overflow-hidden   ${
+          open ? "h-auto" : "h-0"
+        }`}
+        ref={contentRef}
+
       >
         {open && (
           <div className="pt-3 swap_autoheight space-y-2 mr-1">
             <div className={textLine}>
-              <span className={subtext}>Slippage Tolerance:</span>
+              <span className={subtext}>Max. slippage :</span>
               <span>{allowedSlippage}%</span>
             </div>
             <div className={textLine}>
-              <span className={subtext}>Minimum receive:</span>
+              <span className={subtext}>You receive:</span>
               {loading ? (
                 <SkeletonLoad h="15" />
               ) : (
-                <span className="flex-1 text-right">
-                  {minimumReceive} {currencies.OUTPUT?.symbol}{" "}
-                  <p className="opacity-70">
+                <span className="flex-1 flex justify-end flex-row gap-2  text-right w-full">
+                  {minimumReceive} {currencies.OUTPUT?.symbol}{" "} 
+                  <p className="opacity-70 text-[12px]">
                     {outputTokenrate &&
-                      `($${CountParser(
+                      ` ($${CountParser(
                         Number(minimumReceive) * outputTokenrate
                       )})`}
                   </p>{" "}
@@ -124,30 +152,89 @@ function ToggleInfo({
               {loading ? (
                 <SkeletonLoad h="15" />
               ) : (
-                <div className={`grid  gap-3 ${route_sources && route_sources?.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
-                  {route_sources?.map((e, indx) => {
-                    return (
-                      <div className="bg-white bg-opacity-5 p-2 rounded-2xl text-[12px]">
-                        <span className='opacity-70'> {e.name}</span> <span className="font-bold">{e.proportion}%</span>
-                      </div>
-                    );
-                  })}
+                <div className={`flex flex-row items-center`}>
+                  {route_sources?.some((e) => e.name == "MultiHop")
+                    ? route_sources.map((e: any, indx) => {
+                        if (e.name == "MultiHop") {
+                          return (
+                            <div
+                              key={indx}
+                              className="flex flex-row items-center"
+                            >
+                              {e?.hops?.map((hop: any, hopIndex: any) => (
+                                <div
+                                  key={hopIndex}
+                                  className={`${
+                                    hopIndex == 0 ? "" : "ml-[-20px]"
+                                  } p-2 text-[12px]  rounded-[6px]`}
+                                >
+                                  <Image
+                                    className="rounded-[6px] outline ring-1 ring-black ring-opacity-25 outline-offset-[-1px]"
+                                    src={`/route/${hop}.webp`}
+                                    width={20}
+                                    height={20}
+                                    alt={hop}
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })
+                    : route_sources?.map((e, indx) => (
+                        <div
+                          key={indx}
+                          className={`${
+                            indx == 0 ? "" : "ml-[-20px]"
+                          } p-2 text-[12px]  rounded-[6px]`}
+                        >
+                          <Image
+                            className="rounded-[6px] outline ring-1 ring-black ring-opacity-25 outline-offset-[-1px]"
+                            src={`/route/${e.name}.webp`}
+                            width={20}
+                            height={20}
+                            alt={e.name}
+                          />
+                        </div>
+                      ))}
+
+                  <div>
+                    {" "}
+                    {route_sources?.some((e) => e.name === "MultiHop")
+                      ? "MultiHop"
+                      : `sources ${route_sources?.length}`}{" "} 
+                    {/* Text condition */}
+                  </div>
                 </div>
               )}
             </div>
 
+            {Number(estimatedPriceImpact) > 0 && (
+              <div className={textLine}>
+                <span className={subtext}>Price Impact :</span>
+                {loading ? (
+                  <SkeletonLoad h="15" />
+                ) : (
+                  <span>{estimatedPriceImpact}%</span>
+                )}
+              </div>
+            )}
 
             <div className={textLine}>
-              <span className={subtext}>Price Impact :</span>
-              {loading ? <SkeletonLoad h="15" /> : <span>{estimatedPriceImpact}%</span>}
+              <span className={subtext}>Network cost :</span>
+
+              {loading ? (
+                <SkeletonLoad h="15" />
+              ) : (
+                <span>
+                  $
+                  {nativePrice &&
+                    ((Number(estimatedGas) / 10 ** 9) * nativePrice).toFixed(3)}
+                </span>
+              )}
             </div>
-
-            {/* 
-             <div className={textLine}>
-              <span className={subtext}>Trading Fee :</span>
-
-              {loading?  <SkeletonLoad h="15"/> :  <span>1$</span>}
-            </div> */}
           </div>
         )}
       </div>

@@ -249,7 +249,10 @@ function Swapform({}: Props) {
           tokenRate={swapinputInfo[Field.INPUT].price}
           nativePrice={SwapInfo.nativePrice || null}
         />
-        <MiddeToggle toggleToken={toggleInputOutputTokens} />
+        <MiddeToggle toggleToken={toggleInputOutputTokens}    loading={
+          
+         SwapInfo.loading == "pending"
+          }  />
         <SwapCurrencyInputPanel
           loading={
             SwapInfo.activeField == Field.INPUT && SwapInfo.loading == "pending"
@@ -274,6 +277,8 @@ function Swapform({}: Props) {
           outputTokenrate={swapinputInfo[Field.OUTPUT].price}
           sources={bestRoute?.sources}
           estimatedPriceImpact={bestRoute?.estimatedPriceImpact}
+          estimatedGas={bestRoute?.estimatedGas}
+          nativePrice={SwapInfo.nativePrice || null}
         />
 
         {/* <Outputinfo
