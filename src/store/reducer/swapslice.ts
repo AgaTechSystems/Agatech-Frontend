@@ -1,9 +1,9 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { TOKEN, SwapInfo, Field } from "../../../typeing";
-import {getRoute} from "@/store/action/swap/swapaction";
-import {getBalance} from "@/store/action/swap/getbalance";
-
+import { TOKEN, SwapInfo, Field, chainData } from "../../../typeing";
+import { getRoute } from "@/store/action/swap/swapaction";
+import { getBalance, getMyToken } from "@/store/action/swap/getbalance";
+import { Blockchain } from "@/config/swap";
 
 export const EMPTY_DERIVED_SWAP_INFO: SwapInfo = Object.freeze({
   loading: "idle",
@@ -15,9 +15,13 @@ export const EMPTY_DERIVED_SWAP_INFO: SwapInfo = Object.freeze({
   allowedSlippage: "0.5",
   trade: undefined,
   txTime: "20",
-  activeField:Field.INPUT,
-  nativePrice:0
+  activeField: Field.INPUT,
+  nativePrice: 0,
 });
+
+const DEFAULT_INITIAL_STATE = {
+  balance: undefined,
+};
 
 export interface SwapState {
   loading: "idle" | "pending" | "done" | "error";
@@ -25,16 +29,18 @@ export interface SwapState {
   swap: SwapInfo;
   tokenListModel: boolean;
   modelType: Field;
-  settingModel:boolean,
+  settingModel: boolean;
+  [key: number]: chainData | any; // Allow dynamic keys for token balances
 }
 
 const initialState: SwapState = {
   loading: "idle",
-  balanceload:'idle',
+  balanceload: "idle",
   swap: EMPTY_DERIVED_SWAP_INFO,
   tokenListModel: false,
   modelType: Field.INPUT,
-  settingModel:false
+  settingModel: false,
+  [Blockchain.Binance_Smart_Chain]: DEFAULT_INITIAL_STATE,
 };
 
 // Define the slice for pools data and token prices
@@ -69,55 +75,61 @@ const Swapslice = createSlice({
       state.swap.txTime = txTime;
       state.swap.allowedSlippage = allowedSlippage;
     },
-    togglesettingModal: (
-      state,
-      action: PayloadAction<any>
-    ) => {
+    togglesettingModal: (state, action: PayloadAction<any>) => {
       state.settingModel = !state.settingModel;
-
     },
     changeActiveField: (state, action: PayloadAction<Field>) => {
       state.swap.activeField = action.payload;
     },
-    
   },
   extraReducers: (builder) => {
-   
     builder.addCase(getRoute.pending, (state) => {
       // Handle the pending state if needed
-      state.swap.loading = "pending"
+      state.swap.loading = "pending";
     });
     builder.addCase(getRoute.fulfilled, (state, action) => {
-      console.log(action.payload,"action.payload");
-    
+      console.log(action.payload, "action.payload");
+
       state.swap.trade = action.payload.data;
-      state.swap.loading = 'done';
+      state.swap.loading = "done";
       state.swap.nativePrice = Number(action.payload.nativePrice);
-  
     });
 
-    builder.addCase(getRoute.rejected, (state, action) => {
- 
-    }),
-    builder.addCase(getBalance.pending, (state) => {
-      state.balanceload = 'pending'
-    });
+    builder.addCase(getRoute.rejected, (state, action) => {}),
+      builder.addCase(getBalance.pending, (state) => {
+        state.balanceload = "pending";
+      });
     builder.addCase(getBalance.fulfilled, (state, action) => {
-    
- 
-
-    state.swap.currencyBalances[Field.INPUT] = action.payload.inputBalance;
-    state.swap.currencyBalances[Field.OUTPUT] = action.payload.outputBalance;
-    state.balanceload = "done";
-
-    
+      state.swap.currencyBalances[Field.INPUT] = action.payload.inputBalance;
+      state.swap.currencyBalances[Field.OUTPUT] = action.payload.outputBalance;
+      state.balanceload = "done";
     });
     builder.addCase(getBalance.rejected, (state, action) => {
-      state.balanceload = 'error'
+      state.balanceload = "error";
+    }),
+      builder.addCase(getMyToken.pending, (state, action) => {
+        state.balanceload = "pending";
+      });
+    builder.addCase(getMyToken.fulfilled, (state, action) => {
+      const { chainId, tokens } = action.payload;
+
+      state[chainId] = {
+        ...state[chainId],
+        balance: tokens,
+      };
+      state.balanceload = "done";
+    });
+    builder.addCase(getMyToken.rejected, (state, action) => {
+      state.balanceload = "error";
     });
   },
 });
 
-export const { toggleTokenListModal, addCurrency,setTransactionSettings,togglesettingModal,changeActiveField } =
-  Swapslice.actions;
+export const {
+  toggleTokenListModal,
+  addCurrency,
+  setTransactionSettings,
+  togglesettingModal,
+  changeActiveField,
+} = Swapslice.actions;
 export default Swapslice.reducer;

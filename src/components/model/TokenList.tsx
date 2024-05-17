@@ -43,6 +43,7 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
     currencies,
     updateOutputCurrency,
     closeTokenListModel,
+    tokenBalances,
   } = useUpdateCurrencies(56);
 
   const handleSearchChange = (event: any) => {
@@ -62,7 +63,9 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
     setFilteredTokens(filtered);
   };
 
-  const Addtoken = (token: TOKEN) => {
+  const Addtoken = (token: any) => {
+    console.log(token,"token");
+    
     if (modelType == Field.INPUT) {
       updateInputCurrency(token);
     } else {
@@ -81,7 +84,7 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
         content: Content,
       }}
     >
-      <div className="bg-[#171717] md:w-[500px] mx-auto px-5 pb-5 z-[100] relative">
+      <div className="bg-[#171717] md:w-[590px] mx-auto pb-5 z-[100] relative">
         <div className="flex flex-row  justify-between  px-4 py-4 ">
           <div className="text-lg text-white font-semibold">Select a token</div>
 
@@ -98,6 +101,60 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
         <TokenSearch value={searchQuery} handleChange={handleSearchChange} />
 
         <div
+          className="flex flex-col gap-3 overflow-y-scroll pt-5 h-[50vh]"
+          id="scrollableDiv"
+        
+        >
+          <InfiniteScroll
+            dataLength={tokenBalances?.length} //This is important field to render the next data
+            loader={<h4>Loading...</h4>}
+            // style={{ display: "flex", flexDirection: "column" }} //To put endMessage and loader to the top.
+            hasMore={false}
+            className="flex flex-col "
+            next={() => {}}
+            scrollableTarget="scrollableDiv"
+          >
+            {" "}
+            <div className="px-3  text-white opacity-70 pb-3 text-sm">My Tokens</div>
+            {tokenBalances?.map((e: any, indx: any) => {
+              const isMatchedToken =
+                currencies.INPUT == e || currencies.OUTPUT == e;
+
+              return (
+                <div
+                  key={indx}
+                  className={`mb-4 ${
+                    isMatchedToken ? "opacity-50 pointer-events-none" : ""
+                  }`}
+                >
+                  <button onClick={() => Addtoken(e)} className="w-full">
+                    <Tokenline data={e} />
+                  </button>
+                </div>
+              );
+            })}
+      <div className="px-3  text-white opacity-70 pb-3 text-sm">My Tokens</div>
+            {filteredTokens.map((e, indx) => {
+              const isMatchedToken =
+                currencies.INPUT == e || currencies.OUTPUT == e;
+
+              return (
+                <div
+                  key={indx}
+                  className={`mb-4 ${
+                    isMatchedToken ? "opacity-50 pointer-events-none" : ""
+                  } w-full`}
+                >
+                  <button onClick={() => Addtoken(e)} className="w-full">
+                    <Tokenline data={e} />
+                  </button>
+                </div>
+              );
+            })}
+          </InfiniteScroll>
+        </div>
+
+        {/* <div
           className="flex flex-col gap-3 h-[50vh] md:h-[500px] overflow-y-scroll pt-5"
           id="scrollableDiv"
           style={{
@@ -131,7 +188,7 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
               );
             })}
           </InfiniteScroll>
-        </div>
+        </div> */}
       </div>
     </Modal>
   );

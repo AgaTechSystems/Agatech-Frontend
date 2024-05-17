@@ -339,13 +339,13 @@ html {
 
 /* Hide the scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 4px;
 }
 
 /* Add custom scrollbar styles */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+
 }
 
 ::-webkit-scrollbar-thumb {

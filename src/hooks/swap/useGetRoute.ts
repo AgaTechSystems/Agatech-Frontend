@@ -32,7 +32,6 @@ const useGetRoute =  ({
 }: UseGetRouteParams) => {
   const dispatch = useAppdispatch();
 
-  console.log(SwapInfo,"SwapInfo");
   
 
   useEffect(() => {

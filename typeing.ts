@@ -67,3 +67,28 @@ export interface RouteTradeParams {
   outputCurrency: TOKEN | undefined;
   TradeType: any;
 }
+
+
+export interface Token_Balance  {
+  chainId:number,
+  name: string;
+  decimals: number;
+  symbol:string,
+  address: string;
+  isNative: boolean;
+  logoURI:string;
+  balance:string
+}
+
+
+export  interface User {
+  [networkId: number]: {
+   balance:Token_Balance[]
+  };
+}
+
+
+export interface chainData {
+  balance: Token_Balance[];
+  tradingInfo?: any; // Add any other properties as needed
+}

@@ -1,10 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TOKEN } from "../../../../typeing";
-import { getTokeninstanceBysigner,ConvertEthTonormal } from "@/utils/contracthelper";
-
+import {
+  getTokeninstanceBysigner,
+  ConvertEthTonormal,
+} from "@/utils/contracthelper";
+import { getUserTokenbalance } from "@/service/Tokenservice";
 
 import { ethers } from "ethers";
-import {RPC_CLIENT} from "../../../config/network"
+import { RPC_CLIENT } from "../../../config/network";
 export const getBalance = createAsyncThunk(
   "getBalance",
   async (
@@ -18,16 +21,17 @@ export const getBalance = createAsyncThunk(
     { rejectWithValue, signal }
   ) => {
     try {
-  
-
-      const { inputCurrency, outputCurrency, user, signer,chainId } = params;
-      const provider = new ethers.providers.JsonRpcProvider(RPC_CLIENT[chainId])
+      const { inputCurrency, outputCurrency, user, signer, chainId } = params;
+      const provider = new ethers.providers.JsonRpcProvider(
+        RPC_CLIENT[chainId]
+      );
 
       if (signal.aborted) {
         throw new Error("Request aborted");
       }
 
-      let inputBalance, outputBalance = "0";
+      let inputBalance,
+        outputBalance = "0";
 
       if (inputCurrency && !inputCurrency.isNative) {
         const inputContract = await getTokeninstanceBysigner(
@@ -35,11 +39,16 @@ export const getBalance = createAsyncThunk(
           signer
         );
         const BalanceA = await inputContract.balanceOf(user);
-        inputBalance =await ConvertEthTonormal(BalanceA, inputCurrency.decimals);
-      }else if(inputCurrency && inputCurrency.isNative){
+        inputBalance = await ConvertEthTonormal(
+          BalanceA,
+          inputCurrency.decimals
+        );
+      } else if (inputCurrency && inputCurrency.isNative) {
         const balanceA = await provider.getBalance(user);
-        inputBalance =await ConvertEthTonormal(balanceA, inputCurrency.decimals);
-
+        inputBalance = await ConvertEthTonormal(
+          balanceA,
+          inputCurrency.decimals
+        );
       }
 
       if (outputCurrency && !outputCurrency.isNative) {
@@ -47,17 +56,41 @@ export const getBalance = createAsyncThunk(
           outputCurrency?.address,
           signer
         );
-        const BalanceB =( await outputContract.balanceOf(user)).toString();
-        console.log(BalanceB,"outputCurrency",outputCurrency.decimals);
-        
-        outputBalance =await ConvertEthTonormal(BalanceB, outputCurrency.decimals);
+        const BalanceB = (await outputContract.balanceOf(user)).toString();
+        console.log(BalanceB, "outputCurrency", outputCurrency.decimals);
 
-      }else if(outputCurrency && outputCurrency.isNative){
+        outputBalance = await ConvertEthTonormal(
+          BalanceB,
+          outputCurrency.decimals
+        );
+      } else if (outputCurrency && outputCurrency.isNative) {
         const balanceA = await provider.getBalance(user);
-        outputBalance =await ConvertEthTonormal(balanceA, outputCurrency.decimals);
+        outputBalance = await ConvertEthTonormal(
+          balanceA,
+          outputCurrency.decimals
+        );
       }
 
       return { inputBalance, outputBalance };
+    } catch (e) {
+      return rejectWithValue("Request failed");
+    }
+  }
+);
+
+export const getMyToken = createAsyncThunk(
+  "getMyToken",
+  async (
+    params: {
+      user: any;
+      chainId: number;
+    },
+    { rejectWithValue, signal }
+  ) => {
+    const { chainId, user } = params;
+    try {
+      const data = await getUserTokenbalance(user, chainId);
+      return data;
     } catch (e) {
       return rejectWithValue("Request failed");
     }

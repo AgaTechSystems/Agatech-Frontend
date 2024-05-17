@@ -1,23 +1,22 @@
 import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Token } from "@pancakeswap/sdk";
+import { formatAmount } from "@/utils/numbers";
 type Props = {
   data: any;
 };
 
 function Tokenline({ data }: Props) {
-  const { name, symbol, address, logoURI } = data || {};
-  
+  const { name, symbol, address, logoURI, balance ,usdValue} = data || {};
+
   return (
-    <div >
-      <div className="flex flex-row items-center gap-5 px-3">
+    <div className="flex flex-row items-center gap-5  w-full justify-between px-3">
+      <div className="flex flex-row items-center gap-5 ">
         <LazyLoadImage
           alt={"asa"}
           // effect="blur"
-          src={`${
-            logoURI
-          }`}
-          className="w-[40px] rounded-full"
+          src={`${logoURI}`}
+          className="w-[40px] rounded-full logo_shadow"
         />
         <div className="flex flex-col items-start">
           <div className="flex gap-1">
@@ -32,6 +31,22 @@ function Tokenline({ data }: Props) {
             {name}
           </span>
         </div>
+      </div>
+
+      <div>
+       { balance > 0 && <div className="flex flex-col items-end">
+          <div className="flex gap-1">
+            <span className="font-semibold text-white group-hover:text-gray-900 dark:text-slate-50 dark:group-hover:text-white">
+              {formatAmount(balance)}
+            </span>
+          </div>
+          <span
+            className="text-sm text-end text-white opacity-70 text-muted-foreground hover:underline"
+            data-state="closed"
+          >
+            ${formatAmount(usdValue)}
+          </span>
+        </div>}
       </div>
     </div>
   );

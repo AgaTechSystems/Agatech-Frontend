@@ -20,7 +20,7 @@ import {
 } from "@/store/reducer/swapslice"; // Update the path accordingly
 import { getRoute } from "@/store/action/swap/swapaction";
 import { Field, TOKEN, SwapInfo } from "../../../typeing";
-import { getBalance } from "@/store/action/swap/getbalance";
+import { getBalance ,getMyToken} from "@/store/action/swap/getbalance";
 import { useAccount } from "wagmi";
 import {
   SmartRouter,
@@ -44,7 +44,9 @@ const useUpdateCurrencies = (chainId: number, signer?: any, user?: any) => {
     allowedSlippage,
     currencyBalances,
     txTime,
-  } = useAppSelector((state) => state.swapState.swap); // Replace with your Redux state path
+  } = useAppSelector((state) => state.swapState.swap); 
+  const tokenBalances = useAppSelector((state) => state.swapState[chainId]?.balance);
+
   const { tokenListModel, modelType, settingModel, swap, balanceload } =
     useAppSelector((state) => state.swapState);
 
@@ -175,11 +177,22 @@ const useUpdateCurrencies = (chainId: number, signer?: any, user?: any) => {
     );
   };
 
+  const getTokenbalanceforchain = () => {
+    dispatch(
+      getMyToken({
+        chainId: chainId,
+        user: user,
+      })
+    );
+  };
+
   useEffect(() => {
     if (signer) {
       UpdateBalance();
+      getTokenbalanceforchain();
+      
     }
-  }, [signer, currencies.INPUT, currencies.OUTPUT, activeField]);
+  }, [signer, currencies.INPUT, currencies.OUTPUT, activeField,chainId]);
 
   return {
     openTokenListModel,
@@ -205,6 +218,7 @@ const useUpdateCurrencies = (chainId: number, signer?: any, user?: any) => {
     activeField,
     callData,
     callvalue,
+    tokenBalances
   };
 };
 
