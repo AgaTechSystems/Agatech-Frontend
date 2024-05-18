@@ -106,7 +106,7 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
         
         >
           <InfiniteScroll
-            dataLength={tokenBalances?.length} //This is important field to render the next data
+            dataLength={tokenBalances?.length || 0} //This is important field to render the next data
             loader={<h4>Loading...</h4>}
             // style={{ display: "flex", flexDirection: "column" }} //To put endMessage and loader to the top.
             hasMore={false}
@@ -127,14 +127,18 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
                     isMatchedToken ? "opacity-50 pointer-events-none" : ""
                   }`}
                 >
-                  <button onClick={() => Addtoken(e)} className="w-full">
+                  <button onClick={() => {
+                    if(!isMatchedToken){
+                      Addtoken(e)
+                    }
+                  }} className="w-full">
                     <Tokenline data={e} />
                   </button>
                 </div>
               );
             })}
-      <div className="px-3  text-white opacity-70 pb-3 text-sm">My Tokens</div>
-            {filteredTokens.map((e, indx) => {
+      <div className="px-3  text-white opacity-70 pb-3 text-sm"> Tokens</div>
+            {filteredTokens?.map((e, indx) => {
               const isMatchedToken =
                 currencies.INPUT == e || currencies.OUTPUT == e;
 
