@@ -64,8 +64,8 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
   };
 
   const Addtoken = (token: any) => {
-    console.log(token,"token");
-    
+    console.log(token, "token");
+
     if (modelType == Field.INPUT) {
       updateInputCurrency(token);
     } else {
@@ -103,10 +103,9 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
         <div
           className="flex flex-col gap-3 overflow-y-scroll pt-5 h-[50vh]"
           id="scrollableDiv"
-        
         >
           <InfiniteScroll
-            dataLength={tokenBalances?.length || 0} //This is important field to render the next data
+            dataLength={tokenBalances?.length + filteredTokens.length || 0} //This is important field to render the next data
             loader={<h4>Loading...</h4>}
             // style={{ display: "flex", flexDirection: "column" }} //To put endMessage and loader to the top.
             hasMore={false}
@@ -115,29 +114,40 @@ export const TokenList: FC<ModalProps> = ({ open, onClose, modelType }) => {
             scrollableTarget="scrollableDiv"
           >
             {" "}
-            <div className="px-3  text-white opacity-70 pb-3 text-sm">My Tokens</div>
-            {tokenBalances?.map((e: any, indx: any) => {
-              const isMatchedToken =
-                currencies.INPUT == e || currencies.OUTPUT == e;
+            {tokenBalances?.length > 0 && (
+              <div className="px-3  text-white opacity-70 pb-3 text-sm">
+                My Tokens
+              </div>
+            )}
+            {tokenBalances?.length > 0 &&
+              tokenBalances?.map((e: any, indx: any) => {
+                const isMatchedToken =
+                  currencies.INPUT == e || currencies.OUTPUT == e;
 
-              return (
-                <div
-                  key={indx}
-                  className={`mb-4 ${
-                    isMatchedToken ? "opacity-50 pointer-events-none" : ""
-                  }`}
-                >
-                  <button onClick={() => {
-                    if(!isMatchedToken){
-                      Addtoken(e)
-                    }
-                  }} className="w-full">
-                    <Tokenline data={e} />
-                  </button>
-                </div>
-              );
-            })}
-      <div className="px-3  text-white opacity-70 pb-3 text-sm"> Tokens</div>
+                return (
+                  <div
+                    key={indx}
+                    className={`mb-4 ${
+                      isMatchedToken ? "opacity-50 pointer-events-none" : ""
+                    }`}
+                  >
+                    <button
+                      onClick={() => {
+                        if (!isMatchedToken) {
+                          Addtoken(e);
+                        }
+                      }}
+                      className="w-full"
+                    >
+                      <Tokenline data={e} />
+                    </button>
+                  </div>
+                );
+              })}
+            <div className="px-3  text-white opacity-70 pb-3 text-sm">
+              {" "}
+              Tokens
+            </div>
             {filteredTokens?.map((e, indx) => {
               const isMatchedToken =
                 currencies.INPUT == e || currencies.OUTPUT == e;
