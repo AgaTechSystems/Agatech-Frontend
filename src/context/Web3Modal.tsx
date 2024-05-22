@@ -16,7 +16,15 @@ import {
   base,
 } from "wagmi/chains"
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react"
-export const chains = [bsc, arbitrum, base, avalanche, polygon, optimism]
+export const chains = [
+  bsc,
+  arbitrum,
+  base,
+  avalanche,
+  polygon,
+  optimism,
+  fantom,
+]
 import { WagmiConfig } from "wagmi"
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || ""
 interface Web3ModalProps {

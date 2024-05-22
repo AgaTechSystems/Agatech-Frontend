@@ -3,6 +3,7 @@ import {
   avalanche,
   base,
   bsc,
+  fantom,
   mainnet,
   optimism,
   polygon,
@@ -16,6 +17,7 @@ export enum ChainId {
   AVAX = 43114,
   POLYGON = 137,
   OPTIMISM = 10,
+  FANTOM = 250,
 }
 
 export const ChainInfo = {
@@ -47,6 +49,10 @@ export const ChainInfo = {
     config: optimism,
     icon: "/network/optimism.svg",
   },
+  [ChainId.FANTOM]: {
+    config: fantom,
+    icon: "/network/fantom.svg",
+  },
 }
 
 export const SUPPORTED_NETWORK = [
@@ -57,6 +63,7 @@ export const SUPPORTED_NETWORK = [
   ChainId.AVAX,
   ChainId.POLYGON,
   ChainId.OPTIMISM,
+  ChainId.FANTOM,
 ]
 
 export const EIDS: { [chain in ChainId]: number } = {
@@ -67,4 +74,5 @@ export const EIDS: { [chain in ChainId]: number } = {
   [ChainId.AVAX]: 30106,
   [ChainId.POLYGON]: 30109,
   [ChainId.OPTIMISM]: 30111,
+  [ChainId.FANTOM]: 30112,
 }
