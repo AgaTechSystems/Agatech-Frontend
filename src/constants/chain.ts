@@ -1,4 +1,12 @@
-import { arbitrum, avalanche, base, bsc, mainnet, polygon } from "viem/chains"
+import {
+  arbitrum,
+  avalanche,
+  base,
+  bsc,
+  mainnet,
+  optimism,
+  polygon,
+} from "viem/chains"
 
 export enum ChainId {
   // ETHEREUM = 1,
@@ -6,7 +14,8 @@ export enum ChainId {
   ARBITRUM = 42161,
   BASE = 8453,
   AVAX = 43114,
-  POLYGON = 137
+  POLYGON = 137,
+  OPTIMISM = 10,
 }
 
 export const ChainInfo = {
@@ -32,8 +41,12 @@ export const ChainInfo = {
   },
   [ChainId.POLYGON]: {
     config: polygon,
-    icon: '/network/polygon.svg'
-  }
+    icon: "/network/polygon.svg",
+  },
+  [ChainId.OPTIMISM]: {
+    config: optimism,
+    icon: "/network/optimism.svg",
+  },
 }
 
 export const SUPPORTED_NETWORK = [
@@ -42,14 +55,16 @@ export const SUPPORTED_NETWORK = [
   ChainId.ARBITRUM,
   ChainId.BASE,
   ChainId.AVAX,
-  ChainId.POLYGON
+  ChainId.POLYGON,
+  ChainId.OPTIMISM,
 ]
 
-export const EIDS = {
+export const EIDS: { [chain in ChainId]: number } = {
   // [ChainId.ETHEREUM]: 30101,
   [ChainId.BSC]: 30102,
   [ChainId.ARBITRUM]: 30110,
   [ChainId.BASE]: 30184,
   [ChainId.AVAX]: 30106,
-  [ChainId.POLYGON]: 30109
+  [ChainId.POLYGON]: 30109,
+  [ChainId.OPTIMISM]: 30111,
 }

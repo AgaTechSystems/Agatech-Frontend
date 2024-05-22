@@ -31,7 +31,7 @@ const BridgeFromSide: React.FC<BridgeFromSideProps> = ({
 	};
 
 	return (
-		<div className="w-full">
+		<div className="w-full z-[2]">
 			<h6 className="text-[#7E7E7F] text-sm font-bold">Transfer from</h6>
 			<div className="bg-[#1C1D1E] rounded-2xl mt-2">
 				<div className="flex flex-col sm:flex-row justify-between items-center border-b border-[#292929] px-3.5 py-2.5">
