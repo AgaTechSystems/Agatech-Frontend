@@ -3,7 +3,9 @@ import {
   avalanche,
   base,
   bsc,
+  celo,
   fantom,
+  gnosis,
   harmonyOne,
   mainnet,
   optimism,
@@ -20,6 +22,8 @@ export enum ChainId {
   OPTIMISM = 10,
   FANTOM = 250,
   HARMONY = 1666600000,
+  CELO = 42220,
+  GNOSIS = 100,
 }
 
 export const ChainInfo = {
@@ -59,6 +63,14 @@ export const ChainInfo = {
     config: harmonyOne,
     icon: "/network/harmony.png",
   },
+  [ChainId.CELO]: {
+    config: celo,
+    icon: "/network/celo.svg",
+  },
+  [ChainId.GNOSIS]: {
+    config: gnosis,
+    icon: "/network/gnosis.png",
+  },
 }
 
 export const SUPPORTED_NETWORK = [
@@ -71,6 +83,8 @@ export const SUPPORTED_NETWORK = [
   ChainId.OPTIMISM,
   ChainId.FANTOM,
   ChainId.HARMONY,
+  ChainId.CELO,
+  ChainId.GNOSIS,
 ]
 
 export const EIDS: { [chain in ChainId]: number } = {
@@ -83,4 +97,6 @@ export const EIDS: { [chain in ChainId]: number } = {
   [ChainId.OPTIMISM]: 30111,
   [ChainId.FANTOM]: 30112,
   [ChainId.HARMONY]: 30116,
+  [ChainId.CELO]: 30125,
+  [ChainId.GNOSIS]: 30145,
 }
