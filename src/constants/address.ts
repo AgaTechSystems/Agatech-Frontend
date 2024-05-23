@@ -10,6 +10,7 @@ export const AGA_TOKEN_ADDR: { [chain in ChainId]: Address } = {
   [ChainId.POLYGON]: "0x86564008BE7C84E4aeedc55598d7A0a5bDAEfe83",
   [ChainId.OPTIMISM]: "0x3b29F94A99F198c5dE418C11a6DED4B355B9530C",
   [ChainId.FANTOM]: "0xADc989d0C03f385754991E06d90aCab936A2E0a6",
+  [ChainId.HARMONY]: "0x86564008be7c84e4aeedc55598d7a0a5bdaefe83",
 }
 
 export const AGA_BRIDGE_ADDR: { [chain in ChainId]: Address } = {
@@ -21,4 +22,5 @@ export const AGA_BRIDGE_ADDR: { [chain in ChainId]: Address } = {
   [ChainId.POLYGON]: "0x86564008BE7C84E4aeedc55598d7A0a5bDAEfe83",
   [ChainId.OPTIMISM]: "0x3b29F94A99F198c5dE418C11a6DED4B355B9530C",
   [ChainId.FANTOM]: "0xADc989d0C03f385754991E06d90aCab936A2E0a6",
+  [ChainId.HARMONY]: "0x86564008be7c84e4aeedc55598d7a0a5bdaefe83",
 }

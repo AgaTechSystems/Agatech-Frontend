@@ -4,6 +4,7 @@ import {
   base,
   bsc,
   fantom,
+  harmonyOne,
   mainnet,
   optimism,
   polygon,
@@ -18,6 +19,7 @@ export enum ChainId {
   POLYGON = 137,
   OPTIMISM = 10,
   FANTOM = 250,
+  HARMONY = 1666600000,
 }
 
 export const ChainInfo = {
@@ -53,6 +55,10 @@ export const ChainInfo = {
     config: fantom,
     icon: "/network/fantom.svg",
   },
+  [ChainId.HARMONY]: {
+    config: harmonyOne,
+    icon: "/network/harmony.png",
+  },
 }
 
 export const SUPPORTED_NETWORK = [
@@ -64,6 +70,7 @@ export const SUPPORTED_NETWORK = [
   ChainId.POLYGON,
   ChainId.OPTIMISM,
   ChainId.FANTOM,
+  ChainId.HARMONY,
 ]
 
 export const EIDS: { [chain in ChainId]: number } = {
@@ -75,4 +82,5 @@ export const EIDS: { [chain in ChainId]: number } = {
   [ChainId.POLYGON]: 30109,
   [ChainId.OPTIMISM]: 30111,
   [ChainId.FANTOM]: 30112,
+  [ChainId.HARMONY]: 30116,
 }

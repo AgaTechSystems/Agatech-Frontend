@@ -14,6 +14,7 @@ import {
   pulsechain,
   bscTestnet,
   base,
+  harmonyOne,
 } from "wagmi/chains"
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react"
 export const chains = [
@@ -24,6 +25,7 @@ export const chains = [
   polygon,
   optimism,
   fantom,
+  harmonyOne,
 ]
 import { WagmiConfig } from "wagmi"
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || ""

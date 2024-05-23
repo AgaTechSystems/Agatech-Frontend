@@ -31,7 +31,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({
               width={40}
               height={40}
               alt={ChainInfo[chain].config.name}
-              className="w-8 h-8"
+              className="w-8 h-8 rounded-full"
             />
             <span className="font-bold ml-2.5">
               {ChainInfo[chain].config.name}
@@ -65,7 +65,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({
                 width={40}
                 height={40}
                 alt={ChainInfo[item].config.name}
-                className="w-8 h-8"
+                className="w-8 h-8 rounded-full"
               />
               <span className="font-bold ml-2.5">
                 {ChainInfo[item].config.name}
