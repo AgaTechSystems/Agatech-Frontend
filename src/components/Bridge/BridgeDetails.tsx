@@ -38,20 +38,6 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
     watch: true,
   })
 
-  console.log({
-    amountLD: parseEther("1"),
-    minAmountLD: parseEther("1"),
-    dstEid: EIDS[chainId1],
-    to: padHex("0x00000000219ab540356cbb839cbe05303d7705fa", {
-      dir: "left",
-    }),
-    extraOptions: "0x0003010011010000000000000000000000000000ea60",
-    composeMsg: "0x",
-    oftCmd: "0x",
-    quoteData,
-    error: error?.message
-  })
-
   return (
     <div className="w-full bg-[#1C1D1E] border border-[#292929] rounded-xl py-2 px-3">
       <div className="flex justify-between items-center">

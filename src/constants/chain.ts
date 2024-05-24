@@ -4,12 +4,15 @@ import {
   base,
   bsc,
   celo,
+  coreDao,
   fantom,
   gnosis,
   harmonyOne,
   kava,
   klaytn,
+  linea,
   mainnet,
+  mantle,
   metis,
   optimism,
   polygon,
@@ -30,6 +33,9 @@ export enum ChainId {
   KLAYTN = 8217,
   METIS = 1088,
   KAVA = 2222,
+  CORE = 1116,
+  LINEA = 59144,
+  MANTLE = 5000,
 }
 
 export const ChainInfo = {
@@ -89,6 +95,18 @@ export const ChainInfo = {
     config: kava,
     icon: "/network/kava.svg",
   },
+  [ChainId.CORE]: {
+    config: coreDao,
+    icon: "/network/core.svg",
+  },
+  [ChainId.LINEA]: {
+    config: linea,
+    icon: "/network/linea.svg",
+  },
+  [ChainId.MANTLE]: {
+    config: mantle,
+    icon: "/network/mantle.svg",
+  },
 }
 
 export const SUPPORTED_NETWORK = [
@@ -106,6 +124,9 @@ export const SUPPORTED_NETWORK = [
   ChainId.KLAYTN,
   ChainId.METIS,
   ChainId.KAVA,
+  ChainId.CORE,
+  ChainId.LINEA,
+  ChainId.MANTLE,
 ]
 
 export const EIDS: { [chain in ChainId]: number } = {
@@ -123,4 +144,7 @@ export const EIDS: { [chain in ChainId]: number } = {
   [ChainId.KLAYTN]: 30150,
   [ChainId.METIS]: 30151,
   [ChainId.KAVA]: 30177,
+  [ChainId.CORE]: 30153,
+  [ChainId.LINEA]: 30183,
+  [ChainId.MANTLE]: 30181,
 }

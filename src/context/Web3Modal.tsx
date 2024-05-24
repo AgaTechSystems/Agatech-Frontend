@@ -19,6 +19,9 @@ import {
   klaytn,
   metis,
   kava,
+  coreDao,
+  linea,
+  mantle,
 } from "wagmi/chains"
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react"
 export const chains = [
@@ -36,6 +39,9 @@ export const chains = [
   metis,
   kava,
   mainnet,
+  coreDao,
+  linea,
+  mantle,
 ]
 import { WagmiConfig } from "wagmi"
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || ""
