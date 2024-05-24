@@ -16,6 +16,9 @@ import {
   base,
   harmonyOne,
   celo,
+  klaytn,
+  metis,
+  kava,
 } from "wagmi/chains"
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react"
 export const chains = [
@@ -28,7 +31,11 @@ export const chains = [
   fantom,
   harmonyOne,
   celo,
-  gnosis
+  gnosis,
+  klaytn,
+  metis,
+  kava,
+  mainnet,
 ]
 import { WagmiConfig } from "wagmi"
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || ""

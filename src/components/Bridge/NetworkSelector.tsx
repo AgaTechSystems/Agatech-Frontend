@@ -52,7 +52,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute left-0 right-0 w-full mt-2 rounded-md bg-[#292929] text-[#E1E1E1] outline-none py-2">
+        <Menu.Items className="absolute left-0 right-0 w-full mt-2 rounded-md bg-[#292929] text-[#E1E1E1] outline-none py-2 max-h-[250px] overflow-auto">
           {SUPPORTED_NETWORK.filter((item) => item !== chain).map((item) => (
             <Menu.Item
               key={item}

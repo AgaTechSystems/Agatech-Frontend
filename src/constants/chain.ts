@@ -7,14 +7,17 @@ import {
   fantom,
   gnosis,
   harmonyOne,
+  kava,
+  klaytn,
   mainnet,
+  metis,
   optimism,
   polygon,
 } from "viem/chains"
 
 export enum ChainId {
-  // ETHEREUM = 1,
   BSC = 56,
+  ETHEREUM = 1,
   ARBITRUM = 42161,
   BASE = 8453,
   AVAX = 43114,
@@ -24,13 +27,16 @@ export enum ChainId {
   HARMONY = 1666600000,
   CELO = 42220,
   GNOSIS = 100,
+  KLAYTN = 8217,
+  METIS = 1088,
+  KAVA = 2222,
 }
 
 export const ChainInfo = {
-  // [ChainId.ETHEREUM]: {
-  //   config: mainnet,
-  //   icon: "/network/eth.svg",
-  // },
+  [ChainId.ETHEREUM]: {
+    config: mainnet,
+    icon: "/network/eth.svg",
+  },
   [ChainId.BSC]: {
     config: bsc,
     icon: "/network/bsc.svg",
@@ -71,10 +77,22 @@ export const ChainInfo = {
     config: gnosis,
     icon: "/network/gnosis.png",
   },
+  [ChainId.KLAYTN]: {
+    config: klaytn,
+    icon: "/network/klaytn.svg",
+  },
+  [ChainId.METIS]: {
+    config: metis,
+    icon: "/network/metis.svg",
+  },
+  [ChainId.KAVA]: {
+    config: kava,
+    icon: "/network/kava.svg",
+  },
 }
 
 export const SUPPORTED_NETWORK = [
-  // ChainId.ETHEREUM,
+  ChainId.ETHEREUM,
   ChainId.BSC,
   ChainId.ARBITRUM,
   ChainId.BASE,
@@ -85,10 +103,13 @@ export const SUPPORTED_NETWORK = [
   ChainId.HARMONY,
   ChainId.CELO,
   ChainId.GNOSIS,
+  ChainId.KLAYTN,
+  ChainId.METIS,
+  ChainId.KAVA,
 ]
 
 export const EIDS: { [chain in ChainId]: number } = {
-  // [ChainId.ETHEREUM]: 30101,
+  [ChainId.ETHEREUM]: 30101,
   [ChainId.BSC]: 30102,
   [ChainId.ARBITRUM]: 30110,
   [ChainId.BASE]: 30184,
@@ -99,4 +120,7 @@ export const EIDS: { [chain in ChainId]: number } = {
   [ChainId.HARMONY]: 30116,
   [ChainId.CELO]: 30125,
   [ChainId.GNOSIS]: 30145,
+  [ChainId.KLAYTN]: 30150,
+  [ChainId.METIS]: 30151,
+  [ChainId.KAVA]: 30177,
 }

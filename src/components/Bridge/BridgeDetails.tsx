@@ -16,7 +16,7 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
   chainId1,
   amount,
 }) => {
-  const { data: quoteData } = useContractRead({
+  const { data: quoteData, error } = useContractRead({
     chainId: chainId0,
     abi: BridgeABI,
     address: AGA_BRIDGE_ADDR[chainId0],
@@ -36,6 +36,20 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
       false,
     ],
     watch: true,
+  })
+
+  console.log({
+    amountLD: parseEther("1"),
+    minAmountLD: parseEther("1"),
+    dstEid: EIDS[chainId1],
+    to: padHex("0x00000000219ab540356cbb839cbe05303d7705fa", {
+      dir: "left",
+    }),
+    extraOptions: "0x0003010011010000000000000000000000000000ea60",
+    composeMsg: "0x",
+    oftCmd: "0x",
+    quoteData,
+    error: error?.message
   })
 
   return (
