@@ -1,5 +1,5 @@
-import { Address } from "viem"
-import { ChainId } from "./chain"
+import { Address } from "viem";
+import { ChainId } from "./chain";
 
 export const AGA_TOKEN_ADDR: { [chain in ChainId]: Address } = {
   [ChainId.BSC]: "0xb427e47e8fDD678278d2A91EEaC014ffcDDaF029",
@@ -19,7 +19,8 @@ export const AGA_TOKEN_ADDR: { [chain in ChainId]: Address } = {
   [ChainId.CORE]: "0x0d021176E72C19f3FA33Ad57b9c554932adaB0b3",
   [ChainId.LINEA]: "0x3b29F94A99F198c5dE418C11a6DED4B355B9530C",
   [ChainId.MANTLE]: "0x3b29F94A99F198c5dE418C11a6DED4B355B9530C",
-}
+  [ChainId.TRON]: "0xA4E49DBD0EB5DCF3DA3F44B147633B1FC8381836",
+};
 
 export const AGA_BRIDGE_ADDR: { [chain in ChainId]: Address } = {
   [ChainId.BSC]: "0x76Be34f0Eb70088c2D6890a78758bcc4e1C8553a",
@@ -39,4 +40,5 @@ export const AGA_BRIDGE_ADDR: { [chain in ChainId]: Address } = {
   [ChainId.CORE]: "0x0d021176E72C19f3FA33Ad57b9c554932adaB0b3",
   [ChainId.LINEA]: "0x3b29F94A99F198c5dE418C11a6DED4B355B9530C",
   [ChainId.MANTLE]: "0x3b29F94A99F198c5dE418C11a6DED4B355B9530C",
-}
+  [ChainId.TRON]: "0xA4E49DBD0EB5DCF3DA3F44B147633B1FC8381836",
+};

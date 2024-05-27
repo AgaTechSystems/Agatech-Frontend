@@ -16,7 +16,7 @@ import {
   metis,
   optimism,
   polygon,
-} from "viem/chains"
+} from "viem/chains";
 
 export enum ChainId {
   BSC = 56,
@@ -36,6 +36,7 @@ export enum ChainId {
   CORE = 1116,
   LINEA = 59144,
   MANTLE = 5000,
+  TRON = 88888,
 }
 
 export const ChainInfo = {
@@ -107,7 +108,11 @@ export const ChainInfo = {
     config: mantle,
     icon: "/network/mantle.svg",
   },
-}
+  [ChainId.TRON]: {
+    config: { name: "Tron" },
+    icon: "/network/tron.svg",
+  },
+};
 
 export const SUPPORTED_NETWORK = [
   ChainId.ETHEREUM,
@@ -121,13 +126,14 @@ export const SUPPORTED_NETWORK = [
   ChainId.HARMONY,
   ChainId.CELO,
   ChainId.GNOSIS,
-  ChainId.KLAYTN,
-  ChainId.METIS,
-  ChainId.KAVA,
-  ChainId.CORE,
+  // ChainId.KLAYTN,
+  // ChainId.METIS,
+  // ChainId.KAVA,
+  // ChainId.CORE,
   ChainId.LINEA,
-  ChainId.MANTLE,
-]
+  // ChainId.MANTLE,
+  // ChainId.TRON,
+];
 
 export const EIDS: { [chain in ChainId]: number } = {
   [ChainId.ETHEREUM]: 30101,
@@ -147,4 +153,5 @@ export const EIDS: { [chain in ChainId]: number } = {
   [ChainId.CORE]: 30153,
   [ChainId.LINEA]: 30183,
   [ChainId.MANTLE]: 30181,
-}
+  [ChainId.TRON]: 30420,
+};
