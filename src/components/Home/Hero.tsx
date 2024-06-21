@@ -8,6 +8,7 @@ import Tokeninfo from "./Tokeninfo";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sphere } from "@react-three/drei";
 import { pointsInner, pointsOuter } from "../../utils/animation";
+import Link from "next/link";
 
 type Props = {};
 
@@ -66,15 +67,14 @@ function Hero({}: Props) {
             {HeroBtn.map((e, index) => {
               return (
                 <div key={index} className="button__wrap">
-                  <a
+                  <Link
                     key={index}
-                    target="_blank"
                     className="group w-full inline-flex middlePro:text-[10px] hover:opacity-60   text-center border-[1px] font-Ruberoid border-[#4d4d4d]   tracking-wide capitalize no-underline items-center justify-center text-[12px] md:text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  disabled:opacity-50 text-white py-3 px-6 middlePro:px-4"
 
                     href={e.link}
                   >
                   {e.name}
-                  </a>
+                  </Link>
                 </div>
               );
             })}

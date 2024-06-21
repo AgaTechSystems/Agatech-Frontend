@@ -15,7 +15,7 @@ import {
     bscTestnet
   } from "wagmi/chains";
   import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
-  export const chains = [bsc,mainnet,polygon];
+  export const chains = [bsc,polygon];
   import { WagmiConfig } from "wagmi";
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
 interface Web3ModalProps {
