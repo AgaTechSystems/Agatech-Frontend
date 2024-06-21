@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  width: 90%;
+  height: 400px;
+  background-color: transparent;
+  padding-top: 20%;
+  position: relative;
+}
+
+.container > progress {
+  transition: width 0.5s ease-in-out; /* Adjust the transition duration and easing as desired */
+  height: 30px;
+  accent-color: var(--golden-100);
+  width: 70%;
+}
+
+.container > progress::after {
+  content: attr(value) '%';
+  position: relative;
+  left: 110%;
+  top: 12%;
+  font-size: 15px;
+}
+
+.container > label {
+  font-size: 14px;
+}
+
+@media (max-width: 800px) {
+  .container > progress::after {
+    left: 80%;
+  }
+}
