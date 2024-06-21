@@ -1,6 +1,6 @@
 import type { ChainId } from "@/constants"
 import NetworkSelector from "./NetworkSelector"
-import { Address, useAccount, useBalance } from "wagmi"
+import { useAccount, useBalance } from "wagmi"
 import { AGA_TOKEN_ADDR } from "@/constants/address"
 
 interface BridgeToSideProps {
@@ -21,7 +21,9 @@ const BridgeToSide: React.FC<BridgeToSideProps> = ({
     address,
     chainId,
     token: AGA_TOKEN_ADDR[chainId],
-    watch: true,
+    query: {
+      refetchInterval: 5000,
+    },
   })
 
   const onRecipientAddress = () => {

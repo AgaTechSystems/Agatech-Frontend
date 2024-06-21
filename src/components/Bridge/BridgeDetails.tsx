@@ -2,8 +2,8 @@ import { type ChainId, EIDS } from "@/constants"
 import { AGA_BRIDGE_ADDR } from "@/constants/address"
 import BridgeABI from "@/contracts/BridgeABI"
 import type React from "react"
-import { Address, formatEther, padHex, parseEther } from "viem"
-import { useContractRead } from "wagmi"
+import { formatEther, padHex, parseEther } from "viem"
+import { useReadContract } from "wagmi"
 
 interface BridgeDetailsProps {
   chainId0: ChainId
@@ -16,7 +16,7 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
   chainId1,
   amount,
 }) => {
-  const { data: quoteData, error } = useContractRead({
+  const { data: quoteData } = useReadContract({
     chainId: chainId0,
     abi: BridgeABI,
     address: AGA_BRIDGE_ADDR[chainId0],
@@ -35,7 +35,9 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
       },
       false,
     ],
-    watch: true,
+    query: {
+      refetchInterval: 5000,
+    },
   })
 
   return (

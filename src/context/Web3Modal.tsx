@@ -23,7 +23,8 @@ import {
   linea,
   mantle,
 } from "wagmi/chains"
-import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react"
+import { createWeb3Modal } from "@web3modal/wagmi/react"
+import {} from "@web3modal/wagmi/react"
 export const chains = [
   bsc,
   arbitrum,
@@ -42,8 +43,10 @@ export const chains = [
   coreDao,
   linea,
   mantle,
-]
-import { WagmiConfig } from "wagmi"
+] as const
+import { WagmiProvider } from "wagmi"
+import { defaultWagmiConfig } from "@web3modal/wagmi"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || ""
 interface Web3ModalProps {
   children: ReactNode
@@ -57,8 +60,14 @@ const metadata = {
 
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
 
-createWeb3Modal({ wagmiConfig, projectId, chains })
+const queryClient = new QueryClient()
+
+createWeb3Modal({ wagmiConfig, projectId, enableAnalytics: true })
 
 export function Web3Modal({ children }: Web3ModalProps) {
-  return <WagmiConfig config={wagmiConfig}>{children}</WagmiConfig>
+  return (
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </WagmiProvider>
+  )
 }

@@ -2,7 +2,7 @@ import Image from "next/image"
 import NetworkSelector from "./NetworkSelector"
 // biome-ignore lint/style/useImportType: <explanation>
 import { ChainId } from "@/constants"
-import { Address, useAccount, useBalance } from "wagmi"
+import { useAccount, useBalance } from "wagmi"
 import { AGA_TOKEN_ADDR } from "@/constants/address"
 
 interface BridgeFromSideProps {
@@ -23,7 +23,9 @@ const BridgeFromSide: React.FC<BridgeFromSideProps> = ({
     address,
     chainId,
     token: AGA_TOKEN_ADDR[chainId],
-    watch: true,
+    query: {
+      refetchInterval: 5000,
+    },
   })
 
   const onMax = () => {
