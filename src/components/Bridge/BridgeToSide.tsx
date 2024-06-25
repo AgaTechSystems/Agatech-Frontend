@@ -1,13 +1,13 @@
-import type { ChainId } from "@/constants"
-import NetworkSelector from "./NetworkSelector"
-import { Address, useAccount, useBalance } from "wagmi"
-import { AGA_TOKEN_ADDR } from "@/constants/address"
+import type { ChainId } from "@/constants";
+import NetworkSelector from "./NetworkSelector";
+import { useAccount, useBalance } from "wagmi";
+import { AGA_TOKEN_ADDR } from "@/constants/address";
 
 interface BridgeToSideProps {
-  recipient: string | undefined
-  setRecipient: any
-  chainId: ChainId
-  setChainId: any
+  recipient: string | undefined;
+  setRecipient: any;
+  chainId: ChainId;
+  setChainId: any;
 }
 
 const BridgeToSide: React.FC<BridgeToSideProps> = ({
@@ -16,17 +16,19 @@ const BridgeToSide: React.FC<BridgeToSideProps> = ({
   setChainId,
   setRecipient,
 }) => {
-  const { address } = useAccount()
+  const { address } = useAccount();
   const { data: balance } = useBalance({
     address,
     chainId,
     token: AGA_TOKEN_ADDR[chainId],
-    watch: true,
-  })
+    query: {
+      refetchInterval: 5000,
+    },
+  });
 
   const onRecipientAddress = () => {
-    setRecipient(recipient === undefined ? "" : undefined)
-  }
+    setRecipient(recipient === undefined ? "" : undefined);
+  };
 
   return (
     <div className="w-full z-[1]">
@@ -54,7 +56,7 @@ const BridgeToSide: React.FC<BridgeToSideProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BridgeToSide
+export default BridgeToSide;
