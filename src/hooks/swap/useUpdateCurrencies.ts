@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppSelector, useAppdispatch } from "../../hooks/redux"; // Assuming you have a custom Redux hook
 import { hexToBigInt } from "viem";
+import { SUPPORTED_NETWORK, defaultChain } from "@/config/swap";
 import {
   Currency,
   Token,
@@ -20,35 +21,36 @@ import {
 } from "@/store/reducer/swapslice"; // Update the path accordingly
 import { getRoute } from "@/store/action/swap/swapaction";
 import { Field, TOKEN, SwapInfo } from "../../../typeing";
-import { getBalance ,getMyToken,SearchToken} from "@/store/action/swap/getbalance";
 import {
-  SmartRouter,
-  SmartRouterTrade,
-  SMART_ROUTER_ADDRESSES,
-  SwapRouter,
-} from "@pancakeswap/smart-router";
-import { estimateGasFee } from "@/utils/swap/provider";
-import { SWAP_ROUTER } from "@/config/blockchainProvider";
-import { useAccount, } from "wagmi";
-
+  getBalance,
+  getMyToken,
+  SearchToken,
+} from "@/store/action/swap/getbalance";
+import { useAccount } from "wagmi";
 
 const useUpdateCurrencies = (signer?: any, user?: any) => {
-  
   const dispatch = useAppdispatch(); // Replace with your custom Redux hook
-  const { chain,address } = useAccount();
-  
+  const { chain, address } = useAccount();
+
   const [callData, setCallData] = useState<any>("");
   const [callvalue, setcallvalue] = useState<any>("");
   // const [chainId,setchainId] = useState<number>(56)
 
-
   const chainId = useMemo(() => {
-    return chain?.id??56
-   }, [chain?.id]);
- 
-  
+    if (chain?.id) {
+      if (SUPPORTED_NETWORK.includes(chain?.id)) {
+        return chain?.id;
+      } else {
+        return defaultChain;
+      }
+    } else {
+      return defaultChain;
+    }
+  }, [chain?.id]);
 
-
+  const isSupportedNetwork = useMemo(() => {
+    return chain?.id ? SUPPORTED_NETWORK.includes(chain?.id) : false;
+  }, [chain?.id]);
 
   const {
     trade,
@@ -57,7 +59,7 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     allowedSlippage,
     currencyBalances,
     txTime,
-  } = useAppSelector((state) => state.swapState.swap); 
+  } = useAppSelector((state) => state.swapState.swap);
   const tokenState = useAppSelector((state) => state.swapState[chainId]);
 
   const { tokenListModel, modelType, settingModel, swap, balanceload } =
@@ -68,30 +70,9 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
   }, [swap]);
 
   const bestRoute = useMemo(() => {
-   return swap.trade
+    return swap.trade;
   }, [swap.trade, chainId]);
 
-  useEffect(() => {
-    if (!currencies) return;
-    if (SwapInfo.loading == "pending") return;
-
-    const route: any = bestRoute;
-    const estimatedGasAndTrade = async () => {
-      const slippageInteger = Math.floor(Number(allowedSlippage) * 100); // Convert percentage to integer
-      const slippagePercent = new Percent(slippageInteger.toString());
-
-      if (route) {
-        // const { value, calldata } = SwapRouter.swapCallParameters(route, {
-        //   recipient: address,
-        //   slippageTolerance:slippagePercent,
-        // });
-        // setCallData(calldata);
-        // setcallvalue(value);
-      }
-    };
-
-    estimatedGasAndTrade();
-  }, [bestRoute]);
 
   const openTokenListModel = (Field: Field) => {
     dispatch(toggleTokenListModal({ isOpen: true, modelType: Field }));
@@ -134,16 +115,20 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
   };
 
   const setTransactionSetting = (txTime: string, allowedSlippage: string) => {
-      // Save allowedSlippage to local storage
+    // Save allowedSlippage to local storage
     localStorage.setItem("allowedSlippage", allowedSlippage);
     dispatch(setTransactionSettings({ txTime, allowedSlippage }));
   };
   const allowedSlippageFromLocal = localStorage.getItem("allowedSlippage");
   useEffect(() => {
-
     if (allowedSlippageFromLocal) {
       // Dispatch action to set transaction settings with loaded allowedSlippage
-      dispatch(setTransactionSettings({ txTime,allowedSlippage:allowedSlippageFromLocal }));
+      dispatch(
+        setTransactionSettings({
+          txTime,
+          allowedSlippage: allowedSlippageFromLocal,
+        })
+      );
     }
   }, [allowedSlippageFromLocal]);
 
@@ -162,7 +147,7 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     inputCurrency: TOKEN | undefined,
     outputCurrency: TOKEN | undefined,
     TradeType: TradeType,
-    user:any
+    user: any
   ) => {
     await dispatch(
       getRoute({
@@ -172,12 +157,10 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
         outputCurrency,
         TradeType,
         user,
-        allowedSlippage
+        allowedSlippage,
       })
     );
   };
-
-
 
   const UpdateBalance = () => {
     dispatch(
@@ -191,12 +174,11 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     );
   };
 
-  const SearchERC20Token = (query:string) => {
+  const SearchERC20Token = (query: string) => {
     dispatch(
       SearchToken({
         chainId: chainId,
         query: query,
-      
       })
     );
   };
@@ -214,9 +196,8 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     if (signer) {
       UpdateBalance();
       getTokenbalanceforchain();
-      
     }
-  }, [signer, currencies.INPUT, currencies.OUTPUT, activeField,chainId]);
+  }, [signer, currencies.INPUT, currencies.OUTPUT, activeField, chainId]);
 
   return {
     openTokenListModel,
@@ -244,7 +225,8 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     callvalue,
     tokenState,
     SearchERC20Token,
-    chainId
+    chainId,
+    isSupportedNetwork,
   };
 };
 

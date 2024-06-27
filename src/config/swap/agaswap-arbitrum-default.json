@@ -1,14 +1,13 @@
 {
-    "name": "PancakeSwap Arbitrum Default",
+    "name": "Agaswap Arbitrum Default",
     "timestamp": "2024-05-02T17:36:35.266Z",
     "version": {
       "major": 0,
       "minor": 0,
       "patch": 20
     },
-    "logoURI": "https://pancakeswap.finance/logo.png",
     "keywords": [
-      "pancakeswap",
+      "Agaswap",
       "default",
       "arbitrum"
     ],

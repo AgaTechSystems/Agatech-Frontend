@@ -23,6 +23,13 @@ export enum Blockchain {
   Polygon = 137,
 }
 
+export const SUPPORTED_NETWORK = [
+  Blockchain.Binance_Smart_Chain,
+  Blockchain.Polygon,
+]
+export const defaultChain = Blockchain.Binance_Smart_Chain;
+
+
 export const CHAINNAME: { [key: number]: string } = {
   [Blockchain.Ethereum_Mainnet]: "ethereum",
   [Blockchain.Ethereum_Sepolia]: "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
@@ -90,10 +97,12 @@ export const Exchange_CONTRACT: { [key: number]: string } = {
 
 import polygonToken from "@/config/swap/agaswap-polygon-default.json";
 import bscToken from "@/config/swap/agaswap-bsc.json";
+import arbitrumToken from "@/config/swap/agaswap-arbitrum-default.json"
+
 export const TokenListLocal : { [key: number]: any } =  {
   [Blockchain.Ethereum_Mainnet]: "ethereum",
   [Blockchain.Ethereum_Sepolia]: "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
-  [Blockchain.Arbitrum]: "arbitrum",
+  [Blockchain.Arbitrum]: arbitrumToken,
   [Blockchain.Avalanche]: "avalanche",
   [Blockchain.Base]: "base",
   [Blockchain.Binance_Smart_Chain]: bscToken,

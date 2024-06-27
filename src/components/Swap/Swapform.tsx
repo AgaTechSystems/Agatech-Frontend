@@ -10,17 +10,19 @@ import { useAppSelector, useAppdispatch } from "../../hooks/redux";
 import useUpdateCurrencies from "../../hooks/swap/useUpdateCurrencies";
 import { TradeType, Native, Percent } from "@pancakeswap/sdk";
 import useGetRoute from "../../hooks/swap/useGetRoute";
-import { useAccount } from "wagmi";
+import { useAccount,useSwitchChain } from "wagmi";
 import { useDebounce } from "../../hooks/useDebounce";
 import { FormatEther, ConvertEthTonormal } from "@/utils/numbers";
 import ScaleLoader from "react-spinners/ScaleLoader";
 import Swapconnetbtn from "@/components/connetbutton/swapConnetbtn";
 import { useEthersSigner } from "@/hooks/useEthersSigner";
 import ToggleInfo from "./Helper/ToggleInfo";
-import { Exchange_CONTRACT } from "@/config/swap";
+import { Exchange_CONTRACT, defaultChain } from "@/config/swap";
 import useTransation from "../../hooks/swap/useTransation";
 import { hexToBigInt } from "viem";
 import { toast } from "react-toastify";
+
+
 type Props = {};
 
 function Swapform({}: Props) {
@@ -28,7 +30,7 @@ function Swapform({}: Props) {
   const dispatch = useAppdispatch();
   const { address } = useAccount();
   const signer = useEthersSigner();
-
+  const { switchChainAsync } = useSwitchChain();
   // Single object to store both input and output information
   const [swapinputInfo, setswapinputInfo] = useState({
     [Field.INPUT]: {
@@ -66,7 +68,8 @@ function Swapform({}: Props) {
     UpdateBalance,
     callData,
     callvalue,
-    chainId
+    chainId,
+    isSupportedNetwork
   } = useUpdateCurrencies( signer, address);
 
   const { approve, SetApproveToken, HandleSwap, loading } = useTransation(
@@ -74,7 +77,9 @@ function Swapform({}: Props) {
     address,
     Exchange_CONTRACT[chainId],
     swapinputInfo[Field.INPUT].amount,
-    currencies.INPUT
+    isSupportedNetwork,
+    currencies.INPUT,
+
   );
 
   const { getSwapQuote } = useGetRoute({
@@ -167,6 +172,11 @@ function Swapform({}: Props) {
     callSwapPrice();
   }, [bestRoute?.buyAmount, bestRoute?.sellAmount]);
 
+
+
+
+
+
   const Trade = async () => {
   
     if (!currencies) return;
@@ -218,6 +228,11 @@ function Swapform({}: Props) {
       _convertDecimals,
     ]);
   };
+
+
+  const  switchNetwork = async()=>{
+    await switchChainAsync?.({ chainId: defaultChain });
+  }
 
   return (
     <div id="swap" className=" py-2 swap_main  ">
@@ -281,45 +296,46 @@ function Swapform({}: Props) {
 
         {/* swap button */}
         <div className="py-5">
-          {/* <button onClick={Trade} className="swapBtn">
-            Connect a Wallet
-          </button> */}
-          {!address ? (
-            <Swapconnetbtn />
-          ) : !approve ? (
-            <button
-              disabled={loading}
-              onClick={() => Approve()}
-              className="swapBtn bg_swap_btn"
-            >
-              {!loading && "Approve"}
-              <ScaleLoader
-                height={20}
-                loading={loading}
-                color="#ffffff"
-                className="text-white"
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            </button>
-          ) : (
-            <button
-              disabled={loading}
-              onClick={Trade}
-              className="swapBtn bg_swap_btn"
-            >
-              {!loading && "Swap"}
-              <ScaleLoader
-                height={20}
-                loading={loading}
-                color="#ffffff"
-                className="text-white"
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
-            </button>
-          )}
-        </div>
+    {!address ? (
+      <Swapconnetbtn />
+    ) : !isSupportedNetwork ? (
+      <button onClick={switchNetwork} className="swapBtn !bg-red-600 bg-opacity-10">
+        Switch Network
+      </button>
+    ) : !approve ? (
+      <button
+        disabled={loading}
+        onClick={() => Approve()}
+        className="swapBtn bg_swap_btn"
+      >
+        {!loading && "Approve"}
+        <ScaleLoader
+          height={20}
+          loading={loading}
+          color="#ffffff"
+          className="text-white"
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </button>
+    ) : (
+      <button
+        disabled={loading}
+        onClick={Trade}
+        className="swapBtn bg_swap_btn"
+      >
+        {!loading && "Swap"}
+        <ScaleLoader
+          height={20}
+          loading={loading}
+          color="#ffffff"
+          className="text-white"
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </button>
+    )}
+  </div>
         {/* swap button */}
       </div>
 

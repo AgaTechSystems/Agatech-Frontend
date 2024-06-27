@@ -152,7 +152,7 @@ html {
   }
 
    .swapBtn{
-    @apply transition-all text-sm  hover:opacity-70 font-semibold w-full text-white   py-5 swapbtn rounded-3xl flex items-center justify-center   disabled:bg-slate-500 disabled:cursor-not-allowed
+    @apply transition-all text-sm  hover:opacity-70 font-semibold w-full text-white   py-5  rounded-3xl flex items-center justify-center  
    }
    .box_style_nft_layers{
     @apply box_style_nft_layer
@@ -162,9 +162,7 @@ html {
    }
 }
 
-.swapbtn{
-  background: linear-gradient(99deg, #DAA200 0%, #FFD600 100%);
-}
+
 
 @keyframes spin {
   from {

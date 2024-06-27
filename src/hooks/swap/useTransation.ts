@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import {
   getTokeninstance,
   getContractInstanceSigner,
@@ -11,18 +11,25 @@ import { TOKEN } from "../../../typeing";
 
 import { ethers } from "ethers";
 //buy contract  - contractaddress
-import {  multicall } from "@wagmi/core";
+import { multicall } from "@wagmi/core";
 
 const useTransation = (
   signer: any,
   account: any,
   swapcontract: any,
   inputAmount: string,
+  isSupportedNetwork: boolean,
   inputCurrency?: TOKEN
 ) => {
   const [loading, setSellTokenLoading] = useState(false);
   const [balance, setbalance] = useState("0");
   const [approve, setapprove] = useState(false);
+
+  useEffect(() => {
+    if (!isSupportedNetwork || signer!=undefined) {
+      return;
+    }
+  }, [isSupportedNetwork]);
 
   useEffect(() => {
     if (
@@ -98,13 +105,12 @@ const useTransation = (
   };
 
   const HandleSwap = async (tx: any) => {
-
     let sign_toast_id;
     sign_toast_id = toast.loading("Swapping...");
-  
+
     try {
       setSellTokenLoading(true);
-  
+
       const transaction = await signer.sendTransaction(tx);
       console.log("Transaction Hash:", transaction.hash);
       const res = await transaction.wait(); // Wait for confirmation
@@ -121,15 +127,15 @@ const useTransation = (
         return { isDone: false, error: null };
       } else if (error.data) {
         if (error.data.code === -32000) {
-          toast.error("Insufficient funds. Please ensure you have a minimum fund");
+          toast.error(
+            "Insufficient funds. Please ensure you have a minimum fund"
+          );
         }
         return { isDone: false, error: null };
       }
 
       toast.error("Something went wrong. Please try again");
       return { isDone: false, error: null };
-  
-
     }
   };
 
