@@ -75,7 +75,7 @@ const BridgeConfirmButton: React.FC<BridgeConfirmButtonProps> = ({
       }
       setLoading(true);
       try {
-        const allowance = await publicClient.readContract({
+        const allowance:any = await publicClient.readContract({
           abi: erc20Abi,
           // @ts-ignore
           address: AGA_TOKEN_ADDR[chainId0],
@@ -119,7 +119,7 @@ const BridgeConfirmButton: React.FC<BridgeConfirmButtonProps> = ({
           oftCmd: "0x" as `0x${string}`,
         };
 
-        const quote = await publicClient.readContract({
+        const quote:any = await publicClient.readContract({
           abi: BridgeABI,
           // @ts-ignore
           address: AGA_BRIDGE_ADDR[chainId0],

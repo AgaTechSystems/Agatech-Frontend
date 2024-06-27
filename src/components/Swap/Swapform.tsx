@@ -10,7 +10,7 @@ import { useAppSelector, useAppdispatch } from "../../hooks/redux";
 import useUpdateCurrencies from "../../hooks/swap/useUpdateCurrencies";
 import { TradeType, Native, Percent } from "@pancakeswap/sdk";
 import useGetRoute from "../../hooks/swap/useGetRoute";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount } from "wagmi";
 import { useDebounce } from "../../hooks/useDebounce";
 import { FormatEther, ConvertEthTonormal } from "@/utils/numbers";
 import ScaleLoader from "react-spinners/ScaleLoader";
@@ -220,7 +220,7 @@ function Swapform({}: Props) {
   };
 
   return (
-    <div id="swap" className=" py-2 swap_main ">
+    <div id="swap" className=" py-2 swap_main  ">
       {/* token input  */}
       {/* <Header openSettingmodel={OpenSettingModel} /> */}
       <div>

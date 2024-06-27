@@ -11,7 +11,7 @@ import { TOKEN } from "../../../typeing";
 
 import { ethers } from "ethers";
 //buy contract  - contractaddress
-import { erc20ABI, multicall } from "@wagmi/core";
+import {  multicall } from "@wagmi/core";
 
 const useTransation = (
   signer: any,

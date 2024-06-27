@@ -29,14 +29,13 @@ import {
 } from "@pancakeswap/smart-router";
 import { estimateGasFee } from "@/utils/swap/provider";
 import { SWAP_ROUTER } from "@/config/blockchainProvider";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount, } from "wagmi";
 
 
 const useUpdateCurrencies = (signer?: any, user?: any) => {
   
   const dispatch = useAppdispatch(); // Replace with your custom Redux hook
-  const { address } = useAccount();
-  const { chain } = useNetwork();
+  const { chain,address } = useAccount();
   
   const [callData, setCallData] = useState<any>("");
   const [callvalue, setcallvalue] = useState<any>("");

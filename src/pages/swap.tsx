@@ -20,7 +20,7 @@ function Swap({}: Props) {
 
   return (
     <div className="min-h-screen  justify-center  sidenav-content relative pb-24 pt-32 ">
-      <div className=" m-3  swap_main z-10 relative    w-[95vw] mx-auto  md:max-w-[480px] py-2 px-4 rounded-3xl bg-gradient-to-b from-[#185a2b1a] to-neutral-800 ">
+      <div className=" m-3  swap_main swap-bg   z-10 relative    w-[95vw] mx-auto  md:max-w-[480px] py-2 px-4 rounded-3xl  ">
         {/* tab */}
         <div className="flex flex-row items-center justify-between gap-x-2 font-normal w-full">
           <div className="flex flex-row items-center gap-x-2 font-normal w-full  ">

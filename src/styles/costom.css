@@ -161,8 +161,11 @@
 
 .swap_main {
     transition: height 250ms ease !important;
+    
 }
-
+.swap-bg {
+    background-color: rgb(27, 27, 27);
+  }
 .swap_loading:before {
     content: "";
     animation: _1fr4hiz0 .7s linear;
