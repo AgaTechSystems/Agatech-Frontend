@@ -65,6 +65,7 @@ export const getQuote = async (
       skipValidation: false,
       slippagePercentage: Number(slippagePercentage) / 100,
       buyTokenPercentageFee: "0.001",
+
     };
 
     const res = await AGAService.quoteswap(param);
