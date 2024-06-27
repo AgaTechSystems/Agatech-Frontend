@@ -1,16 +1,16 @@
-import Image from "next/image"
-import NetworkSelector from "./NetworkSelector"
+import Image from "next/image";
+import NetworkSelector from "./NetworkSelector";
 // biome-ignore lint/style/useImportType: <explanation>
 // @ts-ignore
-import { ChainId } from "@/constants"
-import { Address, useAccount, useBalance } from "wagmi"
-import { AGA_TOKEN_ADDR } from "@/constants/address"
+import { ChainId } from "@/constants";
+import { useAccount, useBalance } from "wagmi";
+import { AGA_TOKEN_ADDR } from "@/constants/address";
 
 interface BridgeFromSideProps {
-  chainId: ChainId
-  setChainId: any
-  amount: string
-  setAmount: any
+  chainId: ChainId;
+  setChainId: any;
+  amount: string;
+  setAmount: any;
 }
 
 const BridgeFromSide: React.FC<BridgeFromSideProps> = ({
@@ -19,18 +19,20 @@ const BridgeFromSide: React.FC<BridgeFromSideProps> = ({
   amount,
   setAmount,
 }) => {
-  const { address } = useAccount()
+  const { address } = useAccount();
   const { data: balance } = useBalance({
     address,
     chainId,
     // @ts-ignore
     token: AGA_TOKEN_ADDR[chainId],
-    watch: true,
-  })
+    query: {
+      refetchInterval: 5000,
+    },
+  });
 
   const onMax = () => {
-    setAmount(balance?.formatted)
-  }
+    setAmount(balance?.formatted);
+  };
 
   return (
     <div className="w-full z-[2]">
@@ -77,7 +79,7 @@ const BridgeFromSide: React.FC<BridgeFromSideProps> = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BridgeFromSide
+export default BridgeFromSide;

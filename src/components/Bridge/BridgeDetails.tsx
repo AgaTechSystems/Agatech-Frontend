@@ -1,14 +1,14 @@
-import { type ChainId, EIDS } from "@/constants"
-import { AGA_BRIDGE_ADDR } from "@/constants/address"
-import BridgeABI from "@/contracts/BridgeABI"
-import type React from "react"
-import { Address, formatEther, padHex, parseEther } from "viem"
-import { useContractRead } from "wagmi"
+import { type ChainId, EIDS } from "@/constants";
+import { AGA_BRIDGE_ADDR } from "@/constants/address";
+import BridgeABI from "@/contracts/BridgeABI";
+import type React from "react";
+import { Address, formatEther, padHex, parseEther } from "viem";
+import { useContractRead } from "wagmi";
 
 interface BridgeDetailsProps {
-  chainId0: ChainId
-  chainId1: ChainId
-  amount: string
+  chainId0: ChainId;
+  chainId1: ChainId;
+  amount: string;
 }
 
 const BridgeDetails: React.FC<BridgeDetailsProps> = ({
@@ -35,8 +35,10 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
       },
       false,
     ],
-    watch: true,
-  })
+    query: {
+      refetchInterval: 5000,
+    },
+  });
 
   return (
     <div className="w-full bg-[#1C1D1E] border border-[#292929] rounded-xl py-2 px-3">
@@ -57,7 +59,6 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
           Protocol Fee
         </span>
         <span className="text-[#7E7E7F] text-sm font-semibold">
-          
           {quoteData?.nativeFee
             ? Number(formatEther(quoteData.nativeFee)).toLocaleString("en-US", {
                 maximumFractionDigits: 6,
@@ -66,7 +67,7 @@ const BridgeDetails: React.FC<BridgeDetailsProps> = ({
         </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BridgeDetails
+export default BridgeDetails;

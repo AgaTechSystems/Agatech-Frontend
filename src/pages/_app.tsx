@@ -1,11 +1,9 @@
 import "@/styles/globals.css";
-import "@/styles/costom.css"
+import "@/styles/costom.css";
 import "tailwindcss/tailwind.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
-import { ToastContainer, toast } from "react-toastify";
-import { WagmiConfig } from "wagmi";
+import { ToastContainer } from "react-toastify";
 import type { AppProps } from "next/app";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
@@ -15,8 +13,6 @@ import { ThemeProvider } from "next-themes";
 import ErrorBoundary from "../error/error";
 import { useRouter } from "next/router";
 import { Web3Modal } from "../context/Web3Modal";
-
-
 
 export default function App({ Component, pageProps }: AppProps) {
   const [ready, setReady] = useState(false);
@@ -29,16 +25,15 @@ export default function App({ Component, pageProps }: AppProps) {
       {ready ? (
         <ErrorBoundary>
           <Web3Modal>
-          
             <ThemeProvider attribute="class">
               <ToastContainer />
               <Provider store={store}>
-              <Layout pathname={pathname}>
+                <Layout pathname={pathname}>
                   <Component {...pageProps} />
                 </Layout>
               </Provider>
             </ThemeProvider>
-            </Web3Modal>
+          </Web3Modal>
         </ErrorBoundary>
       ) : null}
     </>

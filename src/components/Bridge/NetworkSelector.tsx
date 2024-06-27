@@ -1,14 +1,14 @@
-import { type ChainId, ChainInfo, SUPPORTED_NETWORK } from "@/constants"
-import { Menu, Transition } from "@headlessui/react"
-import { ChevronDownIcon } from "@heroicons/react/20/solid"
-import Image from "next/image"
-import type React from "react"
-import { Fragment } from "react"
+import { type ChainId, ChainInfo, SUPPORTED_NETWORK } from "@/constants";
+import { Menu, Transition } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import Image from "next/image";
+import type React from "react";
+import { Fragment } from "react";
 
 interface NetworkSelectorProps {
-  chain: ChainId
-  setChain: any
-  className?: string
+  chain: ChainId;
+  setChain: any;
+  className?: string;
 }
 
 const NetworkSelector: React.FC<NetworkSelectorProps> = ({
@@ -75,7 +75,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({
         </Menu.Items>
       </Transition>
     </Menu>
-  )
-}
+  );
+};
 
-export default NetworkSelector
+export default NetworkSelector;
