@@ -1,5 +1,5 @@
 import Popup from "reactjs-popup";
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, ReactNode, useEffect, useState ,useMemo} from "react";
 import { CalculatorIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import ScaleLoader from "react-spinners/ScaleLoader";
@@ -29,17 +29,26 @@ export const TokenList: FC<ModalProps> = ({
   modelType,
   chainID,
 }) => {
-  const customTokens = TokenListLocal[chainID]?.tokens.map((tokenInfo: any) => {
-    const { address, decimals, symbol, name, chainId, logoURI } = tokenInfo;
-    return {
-      ...tokenInfo,
-    };
-  });
+  
 
   const [searchQuery, setSearchQuery] = useState("");
   const debounceData = useDebounce(searchQuery);
 
-  const [filteredTokens, setFilteredTokens] = useState(customTokens);
+  const [filteredTokens, setFilteredTokens] = useState([]);
+
+
+  const customTokens = useMemo(() => {
+    const customTokens = TokenListLocal[chainID]?.tokens.map((tokenInfo: any) => {
+      const { address, decimals, symbol, name, chainId, logoURI } = tokenInfo;
+      return {
+        ...tokenInfo,
+      };
+    });
+    setFilteredTokens(customTokens)
+
+    return customTokens;
+  }, [chainID]);
+
 
   const {
     updateInputCurrency,
@@ -54,7 +63,13 @@ export const TokenList: FC<ModalProps> = ({
     if (searchQuery != "") {
       SearchERC20Token(debounceData);
     }
-  }, [debounceData]);
+  }, [debounceData,chainID]);
+
+
+
+
+
+
 
   const handleSearchChange = (event: any) => {
     const query = event.target.value.toLowerCase();
