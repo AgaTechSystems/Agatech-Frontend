@@ -8,7 +8,7 @@ import { SUPPORTED_NETWORK, defaultChain } from "@/config/swap";
 const useNetwork = () => {
   const dispatch = useAppdispatch();
   const { chainId, account } = useAppSelector((state) => state.wallet);
-  const { chainId: CorechainID } = useAccount();
+  const { chainId: CorechainID,isConnected } = useAccount();
 
   const pathname = usePathname();
 
@@ -55,11 +55,20 @@ const useNetwork = () => {
         );
       }
     } else {
-      dispatch(
-        setNetwork({
-            chainId:CorechainID,
-        })
-      );
+      if(isConnected){
+        dispatch(
+          setNetwork({
+              chainId:CorechainID,
+          })
+        );
+      }else{
+        dispatch(
+          setNetwork({
+              chainId:defaultChain,
+          })
+        );
+      }
+  
     }
   }, [pathname, CorechainID]);
 
