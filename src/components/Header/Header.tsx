@@ -12,9 +12,16 @@ import {
 } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import Customconnetbtn from "../connetbutton/Customconnetbtn";
+import NetworkSelector from "../networkSelector/network";
+
+
 
 const Nav = () => {
   const router = useRouter();
+ 
+
+  
+
   const [isMobileMenuVisible, setMobileMenuVisible] = useState(false);
 
   const submenuRef: any = useRef(null);
@@ -78,6 +85,8 @@ const Nav = () => {
               )}
               {/* <h1 className="logo mt-2">GATECH</h1> */}
             </Link>
+            <div className="flex flex-row items-center gap-3 md:hidden ">
+            <NetworkSelector /> 
             {isMobileMenuVisible ? (
               <XMarkIcon
                 className="md:hidden w-8 h-8 text-white cursor-pointer duration-300 ease-in-out transition-opacity "
@@ -89,6 +98,8 @@ const Nav = () => {
                 onClick={toggleMobileMenu} // Attach toggle function here
               />
             )}
+            </div>
+            
           </div>
 
           <div
@@ -106,8 +117,9 @@ const Nav = () => {
             <div className="pt-2 pb-2 flex justify-center space-x-4 mt-3"></div>
           </div>
 
-          <div className="hidden md:flex md:gap-5">
+          <div className="hidden md:flex md:gap-5 items-center">
             <NavLinks />
+             <NetworkSelector /> 
             <Customconnetbtn/>
           </div>
 

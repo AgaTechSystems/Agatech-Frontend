@@ -36,21 +36,9 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
   const [callvalue, setcallvalue] = useState<any>("");
   // const [chainId,setchainId] = useState<number>(56)
 
-  const chainId = useMemo(() => {
-    if (chain?.id) {
-      if (SUPPORTED_NETWORK.includes(chain?.id)) {
-        return chain?.id;
-      } else {
-        return defaultChain;
-      }
-    } else {
-      return defaultChain;
-    }
-  }, [chain?.id]);
+  const { chainId, account } = useAppSelector((state) => state.wallet);
+  const {chainId:CorechainID} = useAccount()
 
-  const isSupportedNetwork = useMemo(() => {
-    return chain?.id ? SUPPORTED_NETWORK.includes(chain?.id) : false;
-  }, [chain?.id]);
 
   const {
     trade,
@@ -61,6 +49,7 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     txTime,
   } = useAppSelector((state) => state.swapState.swap);
   const tokenState = useAppSelector((state) => state.swapState[chainId]);
+
 
   const { tokenListModel, modelType, settingModel, swap, balanceload } =
     useAppSelector((state) => state.swapState);
@@ -73,6 +62,9 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     return swap.trade;
   }, [swap.trade, chainId]);
 
+  const isSupportedNetwork = useMemo(() => {
+    return CorechainID? SUPPORTED_NETWORK.includes(CorechainID):false;
+  }, [chain?.id,chainId]);
 
   const openTokenListModel = (Field: Field) => {
     dispatch(toggleTokenListModal({ isOpen: true, modelType: Field }));
@@ -99,19 +91,23 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
   };
 
   const setDefaultTokens = (chainId: number) => {
+    
     // Assuming defaultToken is an object with the structure you provided
-    dispatch(
-      addCurrency({
-        field: Field.INPUT,
-        currency: defaultToken[chainId][Field.INPUT],
-      })
-    );
-    dispatch(
-      addCurrency({
-        field: Field.OUTPUT,
-        currency: defaultToken[chainId][Field.OUTPUT],
-      })
-    );
+ 
+      dispatch(
+        addCurrency({
+          field: Field.INPUT,
+          currency: defaultToken[chainId][Field.INPUT],
+        })
+      );
+      dispatch(
+        addCurrency({
+          field: Field.OUTPUT,
+          currency: defaultToken[chainId][Field.OUTPUT],
+        })
+      );
+  
+
   };
 
   const setTransactionSetting = (txTime: string, allowedSlippage: string) => {
@@ -141,6 +137,7 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     }
   };
 
+
   const getBestRoute = async (
     chainId: number,
     currencyAmount: string,
@@ -149,6 +146,8 @@ const useUpdateCurrencies = (signer?: any, user?: any) => {
     TradeType: TradeType,
     user: any
   ) => {
+    console.log(chainId,"useUpdateCurrencies ");
+    
     await dispatch(
       getRoute({
         chainId,

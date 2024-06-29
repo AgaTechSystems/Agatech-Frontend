@@ -46,6 +46,8 @@ function Swapform({}: Props) {
   const [RecallRoute, setRecallRoute] = useState("");
   const debounceData = useDebounce(RecallRoute);
 
+  
+
   const {
     updateInputCurrency,
     updateOutputCurrency,
@@ -72,6 +74,7 @@ function Swapform({}: Props) {
     isSupportedNetwork
   } = useUpdateCurrencies( signer, address);
 
+
   const { approve, SetApproveToken, HandleSwap, loading } = useTransation(
     signer,
     address,
@@ -93,6 +96,8 @@ function Swapform({}: Props) {
 
   //set default token for bsc....
   useEffect(() => {
+    console.log(chainId,"chainId");
+    
     setDefaultTokens(chainId);
   }, [chainId]);
 

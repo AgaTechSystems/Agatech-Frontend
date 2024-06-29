@@ -24,8 +24,7 @@ const getTokenHistory = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const response = await axios.get('https://api.dexscreener.com/latest/dex/tokens/0xb427e47e8fdd678278d2a91eeac014ffcddaf029');
     const data = response.data;
-    console.log(data,"data");
-    
+  
 
     // Loop through pairs to calculate total liquidity USD and total volume 24h
     let totalLiquidityUSD = 0;

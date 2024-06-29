@@ -30,9 +30,9 @@ const useGetRoute =  ({
   debounceData,
   address
 }: UseGetRouteParams) => {
+
   const dispatch = useAppdispatch();
 
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,7 +97,7 @@ const useGetRoute =  ({
     };
 
     fetchData(); // Call the inner async function
-  }, [currencies, debounceData, SwapInfo.activeField, chainID,SwapInfo.allowedSlippage]);
+  }, [currencies, debounceData, SwapInfo.activeField, chainID,SwapInfo.allowedSlippage,address]);
 
   const getSwapQuote = async () => {
     if (!currencies) return;

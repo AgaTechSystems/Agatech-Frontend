@@ -15,7 +15,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import Tokensearch from "../Loading/Tokeserch/Tokensearch";
 import { TokenListLocal } from "@/config/swap";
 import useUpdateCurrencies from "../../hooks/swap/useUpdateCurrencies";
-
+import NetworkSelector from "../networkSelector/network";
 interface ModalProps {
   open: boolean;
   onClose: () => void;
@@ -29,7 +29,7 @@ export const TokenList: FC<ModalProps> = ({
   modelType,
   chainID,
 }) => {
-  const customTokens = TokenListLocal[chainID].tokens.map((tokenInfo: any) => {
+  const customTokens = TokenListLocal[chainID]?.tokens.map((tokenInfo: any) => {
     const { address, decimals, symbol, name, chainId, logoURI } = tokenInfo;
     return {
       ...tokenInfo,
@@ -106,8 +106,10 @@ export const TokenList: FC<ModalProps> = ({
             />
           </div>
         </div>
-
-        <TokenSearch value={searchQuery} handleChange={handleSearchChange} />
+        <div className="flex flex-row items-center w-full justify-between px-3  gap-3">
+          <TokenSearch value={searchQuery} handleChange={handleSearchChange} />
+          <NetworkSelector isbuttonBg={true} />
+        </div>
 
         <div
           className="flex flex-col overflow-y-scroll pt-5 h-[50vh]"

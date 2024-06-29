@@ -47,11 +47,13 @@ const initialState: SwapState = {
   modelType: Field.INPUT,
   settingModel: false,
   [Blockchain.Binance_Smart_Chain]: DEFAULT_INITIAL_STATE,
+  [Blockchain.Polygon]: DEFAULT_INITIAL_STATE,
+
 };
 
 // Define the slice for pools data and token prices
 const Swapslice = createSlice({
-  name: "Poolslice",
+  name: "Swapslice",
   initialState,
   reducers: {
     addCurrency: (

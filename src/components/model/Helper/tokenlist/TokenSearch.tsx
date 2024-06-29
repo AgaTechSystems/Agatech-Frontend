@@ -7,7 +7,7 @@ type Props = {
 
 function TokenSearch({ value, handleChange }: Props) {
   return (
-    <div className=" px-3">
+    <div className=" w-full h-[40px]">
   
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
